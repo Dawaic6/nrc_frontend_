@@ -10,13 +10,13 @@ const TopNav = () => {
             </div>
             <div className="flex gap-5 px-10">
                 <Link
-                    to="/signin"
+                    to="/donate"
                     className="px-4 py-1 bg-green-500 text-black font-bold rounded"
                 >
                     Donate
                 </Link>
                 <Link
-                    to="/signin"
+                    to="/signIn"
                     className="px-4 py-1 bg-white text-black font-bold border-1 border-black-300"
                 >
                     Signin
