@@ -1,5 +1,5 @@
 import React from 'react';
-import Image from '../assets/image'; // If using Next.js, or use <img> otherwise
+import Image from '../assets/banner.mp4'; // If using Next.js, or use <img> otherwise
 import officeImage from '../assets/office.jpg'; // Replace with correct path
 import MainLayout from '../layouts/MainLayout';
 
