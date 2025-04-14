@@ -198,9 +198,7 @@
 
 import { NavLink } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
-import React, { useState } from "react";
-
-type MenuType = 'about' | 'services' | 'community' | 'research' | 'publications' | null;
+import { useState } from "react";
 
 const BottomNav = () => {
   const [openMenu, setOpenMenu] = useState<MenuType>(null);

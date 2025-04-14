@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import bannerVideo from '../assets/banner.mp4';
 
 const NursingResearchBanner = () => {

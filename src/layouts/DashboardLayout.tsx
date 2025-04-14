@@ -1,6 +1,6 @@
 
 import { NavLink, Outlet } from "react-router-dom";
-import { ReactNode } from "react";
+
 
 const DashboardLayout = () => {
   return (
