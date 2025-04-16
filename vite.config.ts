@@ -6,6 +6,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react(), tailwindcss(),],
   server: {
-    host: '0.0.0.0', // 👈 This makes the server accessible externally
+    host: true, // 👈 This makes the server accessible externally
     port: 3000,},
+    // allowedHosts: ['nrc-frontend.onrender.com']
 })
