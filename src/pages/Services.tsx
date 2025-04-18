@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import MainLayout from '../layouts/MainLayout';
-import ncds  from '../assets/ncds.jpg';
+import ncds from '../assets/ncds.jpg';
 import srh from '../assets/srh.jpg';
 import mentalHealth from '../assets/mental healthy.jpg';
 import child from '../assets/childhealthy.jpg';
@@ -96,22 +96,43 @@ const sections = [
   },
 ];
 
-const ServiceItem = ({ name, description, image }: { name: string; description: string; image: string }) => {
-  const [show, setShow] = useState(false);
-  return (
-    <div className="bg-white shadow-md rounded-lg p-6 transition-all duration-300 hover:shadow-lg">
-      <div className="flex justify-between items-center">
-        <h3 className="text-xl font-semibold text-gray-900">{name}</h3>
-        </div>
-        <img src={image} alt={name} className="mt-4 rounded-md w-full h-auto object-cover " />
+const ServiceItem = ({
+  name,
+  description,
+  image,
+  layout = 'vertical',
+}: {
+  name: string;
+  description: string;
+  image: string;
+  layout?: 'vertical' | 'horizontal';
+}) => {
+  const [show, setShow] = useState(true);
+
+  return layout === 'horizontal' ? (
+    <div className="bg-white shadow-md rounded-lg p-6 flex flex-col md:flex-row gap-6 items-center hover:shadow-lg transition-all duration-300">
+      <img src={image} alt={name} className="w-full md:w-1/2 h-auto rounded-md object-cover" />
+      <div className="flex-1">
+        <h3 className="text-2xl font-semibold text-gray-900">{name}</h3>
         <button
           onClick={() => setShow(!show)}
-          className="text-blue-600 text-sm font-medium underline hover:text-blue-800"
+          className="text-blue-600 text-sm font-medium underline hover:text-blue-800 mt-2"
         >
           {show ? 'Show less' : 'Learn more'}
         </button>
-      
-     
+        {show && <p className="text-gray-700 mt-4">{description}</p>}
+      </div>
+    </div>
+  ) : (
+    <div className="bg-white shadow-md rounded-lg p-6 hover:shadow-lg transition-all duration-300">
+      <h3 className="text-xl font-semibold text-gray-900">{name}</h3>
+      <img src={image} alt={name} className="mt-4 rounded-md w-full h-auto object-cover" />
+      <button
+        onClick={() => setShow(!show)}
+        className="text-blue-600 text-sm font-medium underline hover:text-blue-800 mt-2"
+      >
+        {show ? 'Show less' : 'Learn more'}
+      </button>
       {show && <p className="text-gray-700 mt-4">{description}</p>}
     </div>
   );
@@ -127,9 +148,13 @@ const Services = () => {
               <h2 className="text-3xl font-bold text-gray-900 mb-2">{section.title}</h2>
               <div className="h-1 w-24 bg-blue-600 mx-auto"></div>
             </div>
-            <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="flex flex-col gap-8">
               {section.items.map((item, i) => (
-                <ServiceItem key={i} {...item} />
+                <ServiceItem
+                  key={i}
+                  {...item}
+                  layout={i % 2 === 0 ? 'vertical' : 'horizontal'}
+                />
               ))}
             </div>
           </section>

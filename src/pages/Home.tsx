@@ -22,6 +22,7 @@ const Home = () => {
                   Image={item.Image}
                   title={item.title}
                   description={item.description}
+                  longDescription={item.longDescription}
                   link={item.link}
                 />
               ))}
@@ -39,6 +40,7 @@ const Home = () => {
                   Image={item.Image}
                   title={item.title}
                   description={item.description}
+                  longDescription={item.longDescription}
                   link={item.link}
                 />
               ))}

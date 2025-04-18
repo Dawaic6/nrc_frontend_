@@ -271,7 +271,7 @@ const BottomNav = () => {
 
         {/* Publications */}
         <div className="relative" onMouseEnter={() => handleMouseEnter('publications')} onMouseLeave={handleMouseLeave}>
-          <NavLink to="/publications" className={({ isActive }) => isActive ? activeClass : linkClass}>Publications</NavLink>
+          <NavLink to="/publication" className={({ isActive }) => isActive ? activeClass : linkClass}>Publications</NavLink>
           {openMenu === 'publications' && (
             <div className="absolute top-full left-0 mt-2 bg-white text-gray-800 rounded-lg shadow-lg py-2">
               <HashLink to="/publications#ongoingResearch" smooth className="block px-4 py-2 hover:bg-gray-100" onClick={() => setOpenMenu(null)}>Ongoing Research</HashLink>

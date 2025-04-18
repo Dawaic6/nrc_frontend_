@@ -12,7 +12,9 @@ import SignUpForm from "./pages/signUp";
 import SignInForm from "./pages/signIn";
 import ContactForm from "./pages/contact";
 import DonationForm from "./pages/Donate";
+import Publication from "./pages/Publication";
 import Research from "./pages/dashboard/research";
+
 import Publications from "./pages/dashboard/pulication";
 import Donation from "./pages/dashboard/danation";
 import Events from "./pages/dashboard/event"; 
@@ -28,7 +30,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/services" element={<Services />} />
-        <Route path="/publications" element={<Publications />} />
+        <Route path="/publication" element={<Publication />} />
         <Route path="/team" element={<Team />} />
         <Route path="/donate" element={<DonationForm />} />
         <Route path="/blog" element={<Blog />} />
@@ -41,7 +43,7 @@ const App = () => {
         {/* Dashboard routes - all nested under /dashboard */}
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<DashboardHome />} /> {/* This will render at /dashboard */}
-          <Route path="publication" element={<Publications />} /> {/* /dashboard/publications */}
+          <Route path="publications" element={<Publications />} /> {/* /dashboard/publications */}
           <Route path="research" element={<Research />} /> {/* /dashboard/research */}
           <Route path="donations" element={<Donation />} /> {/* /dashboard/donations */}
           <Route path="events" element={<Events />} /> {/* /dashboard/events */}

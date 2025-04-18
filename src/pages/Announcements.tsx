@@ -9,9 +9,36 @@ const announcementsData = [
     pdfUrl: 'https://example.com/doc.pdf',
     link: 'https://example.com/event',
   },
+  {
+    title: 'New Research Event',
+    description: 'Join us for a seminar on research ethics.',
+    imageUrl: 'https://via.placeholder.com/150',
+    pdfUrl: 'https://example.com/doc.pdf',
+    link: 'https://example.com/event',
+  },
+  {
+    title: 'New Research Event',
+    description: 'Join us for a seminar on research ethics.',
+    imageUrl: 'https://via.placeholder.com/150',
+    pdfUrl: 'https://example.com/doc.pdf',
+    link: 'https://example.com/event',
+  },
+
 ];
 
 const opportunitiesData = [
+  {
+    title: 'Call for Papers',
+    description: 'Submit your research paper by June.',
+    imageUrl: 'https://via.placeholder.com/150',
+    link: 'https://example.com/submit',
+  },
+  {
+    title: 'Call for Papers',
+    description: 'Submit your research paper by June.',
+    imageUrl: 'https://via.placeholder.com/150',
+    link: 'https://example.com/submit',
+  },
   {
     title: 'Call for Papers',
     description: 'Submit your research paper by June.',
@@ -31,12 +58,4 @@ const Announcements = () => {
 };
 
 export default Announcements;
-// import AnnouncementsTab from './AnnouncementsTab';
 
-
-
-// export default function Dashboard() {
-//   return (
-   
-//   );
-// }
