@@ -18,6 +18,7 @@ const Publications: React.FC = () => {
             Image={item.Image}
             title={item.title}
             description={item.description}
+            longDescription={item.longDescription}
             link={item.link}
           />
         ))}
@@ -33,6 +34,7 @@ const Publications: React.FC = () => {
             Image={item.Image}
             title={item.title}
             description={item.description}
+            longDescription={item.longDescription}
             link={item.link}
           />
         ))}
