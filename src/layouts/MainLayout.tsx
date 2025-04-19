@@ -12,7 +12,7 @@ const MainLayout = ({ children }: LayoutProps) => {
     <div className="flex flex-col min-h-screen">
       <TopNav />
       <BottomNav />
-      <main className="flex-grow container mx-auto p-6">
+      <main className="flex-grow container mx-auto px-4 py-6 md:p-6">
         {children}
       </main>
       <Footer />
