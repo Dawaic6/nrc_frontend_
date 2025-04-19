@@ -107,7 +107,7 @@ const ServiceItem = ({
   image: string;
   layout?: 'vertical' | 'horizontal';
 }) => {
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(true); 
 
   return layout === 'horizontal' ? (
     <div className="bg-white shadow-md rounded-lg p-6 flex flex-col md:flex-row gap-6 items-center hover:shadow-lg transition-all duration-300">
