@@ -38,11 +38,12 @@ const BottomNav = () => {
       </div>
 
       {/* Menu Links */}
-      <div
-        className={`${
-          mobileOpen ? "block" : "hidden"
-        } md:flex justify-center md:space-x-10 text-white font-bold text-sm relative`}
-      >
+     <div
+  className={`${
+    mobileOpen ? "flex flex-col items-center space-y-4" : "hidden"
+  } md:flex md:flex-row md:justify-center md:space-x-10 text-white font-bold text-sm relative`}
+>
+
         <NavLink to="/" className={({ isActive }) => isActive ? activeClass : linkClass}>Home</NavLink>
 
         {/* About */}
@@ -117,9 +118,16 @@ const BottomNav = () => {
           )}
         </div>
 
-        <NavLink to="/blog" className={({ isActive }) => isActive ? activeClass : linkClass}>Blog</NavLink>
-        <NavLink to="/contact" className={({ isActive }) => isActive ? activeClass : linkClass}>Contact</NavLink>
-        <NavLink to="/announcements" className={({ isActive }) => isActive ? activeClass : linkClass}>Announcements</NavLink>
+        <div className="md:inline-block block mt-2 md:mt-0">
+  <NavLink to="/blog" className={({ isActive }) => isActive ? activeClass : linkClass}>Blog</NavLink>
+</div>
+<div className="md:inline-block block mt-2 md:mt-0">
+  <NavLink to="/contact" className={({ isActive }) => isActive ? activeClass : linkClass}>Contact</NavLink>
+</div>
+<div className="md:inline-block block mt-2 md:mt-0">
+  <NavLink to="/announcements" className={({ isActive }) => isActive ? activeClass : linkClass}>Announcements</NavLink>
+</div>
+
       </div>
     </nav>
   );
