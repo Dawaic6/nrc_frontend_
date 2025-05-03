@@ -10,7 +10,7 @@ const LogoutDashboard: React.FC = () => {
     localStorage.removeItem("user");
 
     // Redirect to the login page
-    navigate("/home");
+    navigate("/");
   }, [navigate]);
 
   return (

@@ -27,7 +27,7 @@ const App = () => {
     <Router>
       <Routes>
         {/* Public routes */}
-        <Route path="/home" element={<Home />} />
+        <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/services" element={<Services />} />
         <Route path="/publication" element={<Publication />} />
@@ -42,8 +42,10 @@ const App = () => {
 
         {/* Dashboard routes - all nested under /dashboard */}
         <Route path="/dashboard" element={<DashboardLayout />}>
+          <Route index element={<Publications />} />
+          
           {/* <Route index element={<DashboardHome />} /> This will render at /dashboard */}
-          <Route path="publications" element={<Publications />} /> {/* /dashboard/publications */}
+          {/* <Route path="publications" element={<Publications />} /> /dashboard/publications */}
           <Route path="research" element={<Research />} /> {/* /dashboard/research */}
           <Route path="donations" element={<Donation />} /> {/* /dashboard/donations */}
           <Route path="events" element={<Events />} /> {/* /dashboard/events */}

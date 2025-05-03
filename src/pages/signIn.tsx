@@ -50,7 +50,7 @@ const SignInForm: React.FC = () => {
         if (response.data.role === 'admin') {
           navigate('/dashboard');
         } else {
-          navigate('/home');
+          navigate('/');
         }
       } else {
         setError(response.data.error || 'Invalid credentials');
