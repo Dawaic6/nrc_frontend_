@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import MainLayout from "../layouts/MainLayout";
 
-const BASE_URL = "http://localhost:8000/uploads/";
+const BASE_URL = "https://backend-nrc.onrender.com/uploads/";
 
 interface Announcement {
   _id: string;
@@ -24,7 +24,7 @@ const AnnouncementsPage: React.FC = () => {
   useEffect(() => {
     const fetchAnnouncements = async () => {
       try {
-        const res = await axios.get("http://localhost:8000/api/announcements");
+        const res = await axios.get("https://backend-nrc.onrender.com/api/announcements");
         const data = res.data.data;
 
         // Filter announcements and opportunities based on category

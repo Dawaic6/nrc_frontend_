@@ -40,7 +40,7 @@ const ContactForm: React.FC = () => {
       
       // Send the form data to your backend API
       const response = await axios.post(
-        'http://localhost:8000/api/contact', // Update with your actual API URL
+        'https://backend-nrc.onrender.com/api/contact', // Update with your actual API URL
         formData,
         {
           headers: {
