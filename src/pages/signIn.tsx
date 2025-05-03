@@ -1,70 +1,83 @@
+import type React from "react"
+import { useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
+import MainLayout from "../layouts/MainLayout"
+import axios from "axios"
 
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import MainLayout from '../layouts/MainLayout';
-import axios from 'axios';
+// Create an axios instance with consistent configuration
+const api = axios.create({
+  baseURL: "https://backend-nrc.onrender.com/api",
+  withCredentials: true,
+  headers: {
+    "Content-Type": "application/json",
+  },
+})
 
 const SignInForm: React.FC = () => {
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    showPassword: false
-  });
+    email: "",
+    password: "",
+    showPassword: false,
+  })
 
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+  const [error, setError] = useState<string | null>(null)
+  const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
+    const { name, value } = e.target
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
-    }));
-  };
+      [name]: value,
+    }))
+  }
 
   const togglePasswordVisibility = () => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      showPassword: !prev.showPassword
-    }));
-  };
+      showPassword: !prev.showPassword,
+    }))
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setError(null);
+    e.preventDefault()
+    setLoading(true)
+    setError(null)
 
     try {
-      const response = await axios.post('https://backend-nrc.onrender.com/api/login', {
+      // Use the configured axios instance
+      const response = await api.post("/login", {
         email: formData.email,
-        password: formData.password
-      });
+        password: formData.password,
+      })
+
+      console.log("Login response:", response.data)
 
       if (response.data.success) {
         // Store token in localStorage
-        localStorage.setItem('token', response.data.token);
-        
-        
+        localStorage.setItem("token", response.data.token)
+
         // Redirect based on user role
-        if (response.data.role === 'admin') {
-          navigate('/dashboard');
+        if (response.data.role === "admin") {
+          navigate("/dashboard")
         } else {
-          navigate('/');
+          navigate("/")
         }
       } else {
-        setError(response.data.error || 'Invalid credentials');
+        setError(response.data.error || "Invalid credentials")
       }
     } catch (err) {
+      console.error("Login error:", err)
       if (axios.isAxiosError(err)) {
-        setError(err.response?.data?.error || 'Login failed. Please try again.');
+        setError(err.response?.data?.error || "Login failed. Please try again.")
+        console.log("Error response:", err.response?.data)
       } else {
-        setError('Something went wrong. Please try again later.');
+        setError("Something went wrong. Please try again later.")
       }
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   return (
     <MainLayout>
@@ -80,11 +93,7 @@ const SignInForm: React.FC = () => {
           <div className="px-6 py-6">
             <h3 className="text-xl font-bold text-black mb-6">Sign In</h3>
 
-            {error && (
-              <div className="mb-4 p-2 bg-red-100 text-red-700 text-sm rounded">
-                {error}
-              </div>
-            )}
+            {error && <div className="mb-4 p-2 bg-red-100 text-red-700 text-sm rounded">{error}</div>}
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
@@ -101,7 +110,7 @@ const SignInForm: React.FC = () => {
 
               <div className="relative">
                 <input
-                  type={formData.showPassword ? 'text' : 'password'}
+                  type={formData.showPassword ? "text" : "password"}
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
@@ -114,7 +123,7 @@ const SignInForm: React.FC = () => {
                   onClick={togglePasswordVisibility}
                   className="absolute right-2 top-2 text-xs text-gray-600"
                 >
-                  {formData.showPassword ? 'Hide' : 'Show'}
+                  {formData.showPassword ? "Hide" : "Show"}
                 </button>
               </div>
 
@@ -131,10 +140,7 @@ const SignInForm: React.FC = () => {
                     Show Password
                   </label>
                 </div>
-                <Link 
-                  to="/forgot-password" 
-                  className="text-green-700 text-sm hover:underline"
-                >
+                <Link to="/forgot-password" className="text-green-700 text-sm hover:underline">
                   Forgot password?
                 </Link>
               </div>
@@ -143,19 +149,35 @@ const SignInForm: React.FC = () => {
                 type="submit"
                 disabled={loading}
                 className={`w-full bg-green-800 text-white py-2 font-semibold hover:bg-green-900 transition ${
-                  loading ? 'opacity-70 cursor-not-allowed' : ''
+                  loading ? "opacity-70 cursor-not-allowed" : ""
                 }`}
               >
                 {loading ? (
                   <span className="flex items-center justify-center">
-                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    <svg
+                      className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
                     </svg>
                     Signing In...
                   </span>
                 ) : (
-                  'Sign In'
+                  "Sign In"
                 )}
               </button>
             </form>
@@ -177,7 +199,7 @@ const SignInForm: React.FC = () => {
         </div>
       </div>
     </MainLayout>
-  );
-};
+  )
+}
 
-export default SignInForm;
+export default SignInForm
