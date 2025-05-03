@@ -44,7 +44,7 @@ const BottomNav = () => {
   } md:flex md:flex-row md:justify-center md:space-x-10 text-white font-bold text-sm relative`}
 >
 
-        <NavLink to="/" className={({ isActive }) => isActive ? activeClass : linkClass}>Home</NavLink>
+        <NavLink to="/home" className={({ isActive }) => isActive ? activeClass : linkClass}>Home</NavLink>
 
         {/* About */}
         <div
@@ -62,58 +62,30 @@ const BottomNav = () => {
           )}
         </div>
 
-        {/* Services */}
-        <div
-          className="relative"
-          onMouseEnter={() => handleMouseEnter('services')}
-          onMouseLeave={handleMouseLeave}
-        >
-          <NavLink to="/services" className={({ isActive }) => isActive ? activeClass : linkClass}>Services</NavLink>
-          {openMenu === 'services' && (
-            <div className="absolute top-full left-0 mt-2 bg-white text-gray-800 rounded-lg shadow-lg py-2">
-              {/* Community Awareness */}
-              <div
-                className="relative"
-                onMouseEnter={() => handleMouseEnter('community')}
-                onMouseLeave={handleMouseLeave}
-              >
-                <span className="block px-4 py-2 hover:bg-gray-100 cursor-pointer">Community Awareness</span>
-                {openMenu === 'community' as MenuType && (
-                  <div className="absolute top-0 left-full mt-0 bg-white rounded-lg shadow-lg py-2">
-                    <HashLink to="/services#ncdsScreening" className="block px-4 py-2 hover:bg-gray-100" onClick={() => setOpenMenu(null)}>NCDs Screening</HashLink>
-                    <HashLink to="/services#srhEducation" className="block px-4 py-2 hover:bg-gray-100" onClick={() => setOpenMenu(null)}>SRH Education</HashLink>
-                    <HashLink to="/services#mentalHealthEducation" className="block px-4 py-2 hover:bg-gray-100" onClick={() => setOpenMenu(null)}>Mental Health Education</HashLink>
-                  </div>
-                )}
+       {/* Services */}
+          <div
+            className="relative"
+            onMouseEnter={() => handleMouseEnter('services')}
+            onMouseLeave={handleMouseLeave}
+          >
+            <NavLink to="/services" className={({ isActive }) => isActive ? activeClass : linkClass}>Services</NavLink>
+            {openMenu === 'services' && (
+              <div className="absolute top-full left-0 mt-2 bg-white text-gray-800 rounded-lg shadow-lg py-2">
+                <HashLink to="/services#communityawareness" className="block px-4 py-2 hover:bg-gray-100" onClick={() => setOpenMenu(null)}>Community Awareness</HashLink>
+                <HashLink to="/services#researchandinnovation" className="block px-4 py-2 hover:bg-gray-100" onClick={() => setOpenMenu(null)}>Research and Innovation</HashLink>
+                <HashLink to="/services#mentorshipwing" className="block px-4 py-2 hover:bg-gray-100" onClick={() => setOpenMenu(null)}>Mentorship Wing</HashLink>
               </div>
-
-              {/* Research & Innovation */}
-              <div
-                className="relative"
-                onMouseEnter={() => handleMouseEnter('research')}
-                onMouseLeave={handleMouseLeave}
-              >
-                <span className="block px-4 py-2 hover:bg-gray-100 cursor-pointer">Research & Innovation</span>
-                {openMenu === 'research' as MenuType && (
-                  <div className="absolute top-0 left-full mt-0 bg-white text-gray-800 rounded-lg shadow-lg py-2">
-                    <HashLink to="/services#innovativeProjects" className="block px-4 py-2 hover:bg-gray-100" onClick={() => setOpenMenu(null)}>Innovative Projects</HashLink>
-                    <HashLink to="/services#researchFellowship" className="block px-4 py-2 hover:bg-gray-100" onClick={() => setOpenMenu(null)}>Research Fellowship</HashLink>
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
-        </div>
-
+            )}
+          </div>
         <NavLink to="/team" className={({ isActive }) => isActive ? activeClass : linkClass}>Team</NavLink>
 
         {/* Publications */}
         <div className="relative" onMouseEnter={() => handleMouseEnter('publications')} onMouseLeave={handleMouseLeave}>
           <NavLink to="/publication" className={({ isActive }) => isActive ? activeClass : linkClass}>Publications</NavLink>
-          {openMenu === 'publications' && (
+          {openMenu === 'publications' as MenuType && (
             <div className="absolute top-full left-0 mt-2 bg-white text-gray-800 rounded-lg shadow-lg py-2">
-              <HashLink to="/publications#ongoingResearch" className="block px-4 py-2 hover:bg-gray-100" onClick={() => setOpenMenu(null)}>Ongoing Research</HashLink>
-              <HashLink to="/publications#publishedResearch" className="block px-4 py-2 hover:bg-gray-100" onClick={() => setOpenMenu(null)}>Published Research</HashLink>
+              <HashLink to="/publication#ongoingResearch" className="block px-4 py-2 hover:bg-gray-100" onClick={() => setOpenMenu(null)}>Ongoing Research</HashLink>
+              <HashLink to="/publication#publishedResearch" className="block px-4 py-2 hover:bg-gray-100" onClick={() => setOpenMenu(null)}>Published Research</HashLink>
             </div>
           )}
         </div>

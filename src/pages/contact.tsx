@@ -174,7 +174,7 @@ const ContactForm: React.FC = () => {
                       />
                     </div>
                   </div>
-                  console.log('Current form data:', formData);
+                  {/* console.log('Current form data:', formData); */}
                   <div>
                     <button
                       type="submit"

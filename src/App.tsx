@@ -5,9 +5,7 @@ import Services from "./pages/Services";
 import Team from "./pages/Team";
 import Blog from "./pages/Blog";
 import Announcements from "./pages/Announcements";
-// import Auth from "./pages/Auth";
-// import Dashboard from "./pages/Dashboard";
-import DashboardLayout from "./layouts/DashboardLayout"; // Import your DashboardLayout
+import DashboardLayout from "./layouts/DashboardLayout"; 
 import SignUpForm from "./pages/signUp";
 import SignInForm from "./pages/signIn";
 import ContactForm from "./pages/contact";
@@ -15,19 +13,21 @@ import DonationForm from "./pages/Donate";
 import Publication from "./pages/Publication";
 import Research from "./pages/dashboard/research";
 
-import Publications from "./pages/dashboard/pulication";
+import Publications from "./pages/dashboard/publication";
 import Donation from "./pages/dashboard/danation";
-import Events from "./pages/dashboard/event"; 
-import Users from "./pages/dashboard/users"; // You'll need to create these components
-import LogOut from "./pages/dashboard/logOut";// You'll need to create these components
-import Help from "./pages/dashboard/help"; // You'll need to create these components
-import DashboardHome from "./pages/dashboard/dashboard"; // You might want a separate component for the dashboard ho
+import Events from "./pages/dashboard/announcement"; 
+import Users from "./pages/dashboard/users"; 
+import LogOut from "./pages/dashboard/logOut";
+import Help from "./pages/dashboard/help"; 
+import DashboardHome from "./pages/dashboard/dashboard"; 
+import TeamDashboard from "./pages/dashboard/team"; 
+import MessagesDashboard from "./pages/dashboard/mesage";
 const App = () => {
   return (
     <Router>
       <Routes>
         {/* Public routes */}
-        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/services" element={<Services />} />
         <Route path="/publication" element={<Publication />} />
@@ -42,14 +42,17 @@ const App = () => {
 
         {/* Dashboard routes - all nested under /dashboard */}
         <Route path="/dashboard" element={<DashboardLayout />}>
-          <Route index element={<DashboardHome />} /> {/* This will render at /dashboard */}
+          {/* <Route index element={<DashboardHome />} /> This will render at /dashboard */}
           <Route path="publications" element={<Publications />} /> {/* /dashboard/publications */}
           <Route path="research" element={<Research />} /> {/* /dashboard/research */}
           <Route path="donations" element={<Donation />} /> {/* /dashboard/donations */}
           <Route path="events" element={<Events />} /> {/* /dashboard/events */}
           <Route path="users" element={<Users />} /> {/* /dashboard/users */}
+          <Route path="TeamDashboard" element={<TeamDashboard />} /> {/* /dashboard/team */}
           <Route path="logout" element={<LogOut />} /> {/* /dashboard/logout */}
           <Route path="help" element={<Help />} /> {/* /dashboard/help */}
+          <Route path="message" element={<MessagesDashboard />} /> {/* /dashboard/help */}
+
         </Route>
       </Routes>
     </Router>

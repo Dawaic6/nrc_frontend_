@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 type Announcement = {
   imageUrl?: string;
@@ -6,6 +6,7 @@ type Announcement = {
   description: string;
   pdfUrl?: string;
   link?: string;
+  videoUrl?: string; // Add videoUrl if needed
 };
 
 type Opportunity = {
@@ -13,6 +14,7 @@ type Opportunity = {
   title: string;
   description: string;
   link?: string;
+  videoUrl?: string; // Add videoUrl if needed
 };
 
 type Props = {
@@ -34,13 +36,18 @@ const AnnouncementsTab: React.FC<Props> = ({
           <div key={i} className="border p-4 rounded shadow-sm space-y-2">
             <h3 className="text-xl font-semibold">{a.title}</h3>
             <p>{a.description}</p>
-            {a.imageUrl && (
+            {a.imageUrl ? (
               <img
                 src={a.imageUrl}
                 alt="announcement"
                 className="mt-2 max-w-xs rounded"
               />
-            )}
+            ) : a.videoUrl ? (
+              <video controls className="mt-2 max-w-xs rounded">
+                <source src={a.videoUrl} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            ) : null}
             {a.pdfUrl && (
               <a
                 href={a.pdfUrl}
@@ -75,13 +82,18 @@ const AnnouncementsTab: React.FC<Props> = ({
           <div key={i} className="border p-4 rounded shadow-sm space-y-2">
             <h3 className="text-xl font-semibold">{o.title}</h3>
             <p>{o.description}</p>
-            {o.imageUrl && (
+            {o.imageUrl ? (
               <img
                 src={o.imageUrl}
                 alt="opportunity"
                 className="mt-2 max-w-xs rounded"
               />
-            )}
+            ) : o.videoUrl ? (
+              <video controls className="mt-2 max-w-xs rounded">
+                <source src={o.videoUrl} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            ) : null}
             {o.link && (
               <a
                 href={o.link}

@@ -143,11 +143,14 @@ const Services = () => {
     <MainLayout>
       <div className="max-w-7xl mx-auto px-4 py-12 space-y-20">
         {sections.map((section, idx) => (
-          <section key={idx}>
+          <section key={idx} id={section.title.replace(/\s+/g, '').toLowerCase()}>
+            {/* Section Title */}
             <div className="text-center mb-10">
               <h2 className="text-3xl font-bold text-gray-900 mb-2">{section.title}</h2>
               <div className="h-1 w-24 bg-blue-600 mx-auto"></div>
             </div>
+
+            {/* Section Items */}
             <div className="flex flex-col gap-8">
               {section.items.map((item, i) => (
                 <ServiceItem

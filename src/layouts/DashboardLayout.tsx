@@ -6,6 +6,7 @@ import {
   FaFlask, 
   FaDonate,
   FaCalendarAlt,
+  FaEnvelope,
   FaUsers,
   FaQuestionCircle,
   FaSignOutAlt 
@@ -33,20 +34,20 @@ const DashboardLayout = () => {
         </div>
         <nav className="flex-1">
           <ul>
-            <MenuItem 
-              to="/dashboard" 
+            {/* <MenuItem 
+              to="" 
               icon={<FaTachometerAlt className="mr-3" />} 
               label="Dashboard"
-            />
+            /> */}
             <MenuItem 
-              to="/dashboard/publication" 
+              to="/dashboard/publications" 
               icon={<FaBook className="mr-3" />} 
               label="Publications"
             />
             <MenuItem 
               to="/dashboard/research" 
               icon={<FaFlask className="mr-3" />} 
-              label="Research"
+              label="Blogs"
             />
             <MenuItem 
               to="/dashboard/donations" 
@@ -56,7 +57,17 @@ const DashboardLayout = () => {
             <MenuItem 
               to="/dashboard/events" 
               icon={<FaCalendarAlt className="mr-3" />} 
-              label="Events"
+              label="Announcements"
+            />
+             <MenuItem 
+              to="/dashboard/message" 
+              icon={<FaEnvelope className="mr-3" />}
+              label="Messages"
+            />
+             <MenuItem 
+              to="/dashboard/TeamDashboard" 
+              icon={<FaUsers className="mr-3" />} 
+              label="Team"
             />
             <MenuItem 
               to="/dashboard/users" 

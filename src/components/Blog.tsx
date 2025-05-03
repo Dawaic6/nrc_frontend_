@@ -3,25 +3,27 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
 interface NewsCardProps {
-  Image: string;
+  image: string;
+  video?: string;
   title: string;
-  description: string;
+  shortDescription: string;
   longDescription: string;
-  link: string;
+  pdf?: string;
+  
 }
 
 const NewsCard: React.FC<NewsCardProps> = ({
-  Image,
+  image,
+  video,
   title,
-  description,
+  shortDescription,
   longDescription,
-  link,
+  pdf,
 }) => {
   const [showModal, setShowModal] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
   const [imageBase64, setImageBase64] = useState("");
 
-  // Convert image to Base64 if it's not already
   const convertImageToBase64 = async (url: string): Promise<string> => {
     const response = await fetch(url, { mode: "cors" });
     const blob = await response.blob();
@@ -33,19 +35,16 @@ const NewsCard: React.FC<NewsCardProps> = ({
   };
 
   useEffect(() => {
-    // Only convert if not already a data URI
-    if (!Image.startsWith("data:")) {
-      convertImageToBase64(Image).then(setImageBase64);
+    if (!image.startsWith("data:")) {
+      convertImageToBase64(image).then(setImageBase64);
     } else {
-      setImageBase64(Image);
+      setImageBase64(image);
     }
-  }, [Image]);
+  }, [image]);
 
   const handleDownloadPDF = async () => {
     if (modalRef.current) {
-      const canvas = await html2canvas(modalRef.current, {
-        useCORS: true, // Important for external images
-      });
+      const canvas = await html2canvas(modalRef.current, { useCORS: true });
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF();
       const imgProps = pdf.getImageProperties(imgData);
@@ -60,12 +59,12 @@ const NewsCard: React.FC<NewsCardProps> = ({
     <>
       <div className="w-full max-w-xs text-center">
         <img
-          src={imageBase64 || Image}
+          src={imageBase64 || image}
           alt={title}
           className="w-full h-48 object-cover rounded-md"
         />
         <h3 className="mt-2 font-bold text-sm">{title}</h3>
-        <p className="text-gray-600 text-sm">{description}</p>
+        <p className="text-gray-600 text-sm">{shortDescription}</p>
         <button
           onClick={() => setShowModal(true)}
           className="text-blue-700 font-semibold hover:underline mt-1 inline-block"
@@ -86,27 +85,35 @@ const NewsCard: React.FC<NewsCardProps> = ({
             >
               ✖
             </button>
+
             <img
-              src={imageBase64 || Image}
+              src={imageBase64 || image}
               alt={title}
               className="w-full h-56 object-cover rounded"
             />
+             {video && (
+              <video
+                src={video}
+                controls
+                className="mt-4 w-full rounded"
+              ></video>
+            )} 
+
             <h2 className="text-xl font-bold mt-4">{title}</h2>
             <p className="text-gray-700 mt-2">{longDescription}</p>
-            <a
-              href={link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 mt-4 block underline"
-            >
-              Visit original link
-            </a>
-            <button
-              onClick={handleDownloadPDF}
-              className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-            >
-              Download as PDF
-            </button>
+          
+
+            {pdf && (
+              <a
+                href={pdf}
+                download
+                className="text-green-600 mt-3 inline-block underline"
+              >
+                📄 Download PDF Document
+              </a>
+            )}
+
+           
           </div>
         </div>
       )}
