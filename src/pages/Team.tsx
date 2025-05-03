@@ -28,7 +28,7 @@ const MeetTheTeam: React.FC = () => {
   useEffect(() => {
     const fetchTeamData = async () => {
       try {
-        const API_BASE_URL = "https://backend-nrc.onrender.com/" // Hardcoded API base URL
+        const API_BASE_URL = "https://backend-nrc.onrender.com" // Hardcoded API base URL
         const res = await axios.get(`${API_BASE_URL}/api/team`)
         console.log("API Response:", res.data)
 
