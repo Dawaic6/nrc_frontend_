@@ -17,7 +17,7 @@ interface Publication {
   createdAt?: string;
 }
 
-const BASE_URL = "http://localhost:8000/uploads/";
+const BASE_URL = "https://backend-nrc.onrender.com/uploads/";
 
 const Publications: React.FC = () => {
   const [ongoingResearch, setOngoingResearch] = useState<Publication[]>([]);
@@ -28,7 +28,7 @@ const Publications: React.FC = () => {
   useEffect(() => {
     const fetchPublications = async () => {
       try {
-        const res = await axios.get("http://localhost:8000/api/publications");
+        const res = await axios.get("https://backend-nrc.onrender.com/api/publications");
         const cleaned = res.data.data.map((item: Publication) => ({
           ...item,
           title: item.title?.replace(/^"|"$/g, "") || "Untitled",

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
-const BASE_URL = "http://localhost:8000/uploads/";
+const BASE_URL = "https://backend-nrc.onrender.com/uploads/";
 
 interface Announcement {
   _id: string;
@@ -31,7 +31,7 @@ const AnnouncementsDashboard: React.FC = () => {
   useEffect(() => {
     const fetchAnnouncements = async () => {
       try {
-        const res = await axios.get("http://localhost:8000/api/announcements");
+        const res = await axios.get("https://backend-nrc.onrender.com/api/announcements");
         setAnnouncements(res.data.data);
       } catch (err) {
         setError("Failed to fetch announcements.");
@@ -47,7 +47,7 @@ const AnnouncementsDashboard: React.FC = () => {
     const confirmDelete = window.confirm("Are you sure you want to delete this announcement?");
     if (confirmDelete) {
       try {
-        await axios.delete(`http://localhost:8000/api/announcements/${id}`);
+        await axios.delete(`https://backend-nrc.onrender.com/api/announcements/${id}`);
         setAnnouncements(announcements.filter((announcement) => announcement._id !== id));
       } catch (err) {
         console.error("Failed to delete announcement:", err);
@@ -83,7 +83,7 @@ const AnnouncementsDashboard: React.FC = () => {
 
       try {
         await axios.put(
-          `http://localhost:8000/api/announcements/${editingAnnouncement._id}`,
+          `https://backend-nrc.onrender.com/api/announcements/${editingAnnouncement._id}`,
           formData
         );
         const updatedAnnouncements = announcements.map((announcement) =>
@@ -118,7 +118,7 @@ const AnnouncementsDashboard: React.FC = () => {
       }
 
       try {
-        const res = await axios.post("http://localhost:8000/api/announcements", formData);
+        const res = await axios.post("https://backend-nrc.onrender.com/api/announcements", formData);
         setAnnouncements([...announcements, res.data]);
         setShowModal(false);
         setNewAnnouncement({});

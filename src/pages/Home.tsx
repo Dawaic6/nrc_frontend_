@@ -16,7 +16,7 @@ interface BlogPost {
   createdAt?: string;
 }
 
-const BASE_URL = "http://localhost:8000/uploads/";
+const BASE_URL = "https://backend-nrc.onrender.com/uploads/";
 
 const Home: React.FC = () => {
   const [blogs, setBlogs] = useState<BlogPost[]>([]);
@@ -29,7 +29,7 @@ const Home: React.FC = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const res = await axios.get("http://localhost:8000/api/blogs");
+        const res = await axios.get("https://backend-nrc.onrender.com/api/blogs");
         const cleaned = res.data.data.map((item: BlogPost) => ({
           ...item,
           title: item.title?.replace(/^"|"$/g, "") || "Untitled",
@@ -56,7 +56,7 @@ const Home: React.FC = () => {
 
     const fetchPublications = async () => {
       try {
-        const res = await axios.get("http://localhost:8000/api/publications"); // Fetch from publications endpoint
+        const res = await axios.get("https://backend-nrc.onrender.com/api/publications"); // Fetch from publications endpoint
         const cleaned = res.data.data.map((item: BlogPost) => ({
           ...item,
           title: item.title?.replace(/^"|"$/g, "") || "Untitled",

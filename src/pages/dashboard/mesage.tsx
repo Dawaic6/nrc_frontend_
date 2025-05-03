@@ -18,7 +18,7 @@ const MessagesDashboard: React.FC = () => {
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const res = await axios.get("http://localhost:8000/api/messages");
+        const res = await axios.get("https://backend-nrc.onrender.com/api/messages");
         setMessages(res.data.data);
       } catch (err) {
         setError("Failed to fetch messages.");
@@ -34,7 +34,7 @@ const MessagesDashboard: React.FC = () => {
     const confirmDelete = window.confirm("Are you sure you want to delete this message?");
     if (confirmDelete) {
       try {
-        await axios.delete(`http://localhost:8000/api/delete/${id}`);
+        await axios.delete(`https://backend-nrc.onrender.com/api/delete/${id}`);
         setMessages(messages.filter((message) => message._id !== id));
       } catch (err) {
         console.error("Failed to delete message:", err);

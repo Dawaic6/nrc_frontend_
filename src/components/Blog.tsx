@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
-import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
+// import jsPDF from "jspdf";
+// import html2canvas from "html2canvas";
 
 interface NewsCardProps {
   image: string;
@@ -42,18 +42,18 @@ const NewsCard: React.FC<NewsCardProps> = ({
     }
   }, [image]);
 
-  const handleDownloadPDF = async () => {
-    if (modalRef.current) {
-      const canvas = await html2canvas(modalRef.current, { useCORS: true });
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF();
-      const imgProps = pdf.getImageProperties(imgData);
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-      pdf.save(`${title}.pdf`);
-    }
-  };
+  // const handleDownloadPDF = async () => {
+  //   if (modalRef.current) {
+  //     const canvas = await html2canvas(modalRef.current, { useCORS: true });
+  //     const imgData = canvas.toDataURL("image/png");
+  //     const pdf = new jsPDF();
+  //     const imgProps = pdf.getImageProperties(imgData);
+  //     const pdfWidth = pdf.internal.pageSize.getWidth();
+  //     const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+  //     pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+  //     pdf.save(`${title}.pdf`);
+  //   }
+  // };
 
   return (
     <>

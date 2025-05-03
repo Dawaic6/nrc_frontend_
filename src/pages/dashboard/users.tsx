@@ -23,7 +23,7 @@ const UserDashboard: React.FC = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await axios.get("http://localhost:8000/api/users");
+        const res = await axios.get("https://backend-nrc.onrender.com/api/users");
         setUsers(res.data.data);
       } catch (err) {
         setError("Failed to fetch users.");
@@ -37,7 +37,7 @@ const UserDashboard: React.FC = () => {
 
   const handleDelete = async (id: string) => {
     try {
-      await axios.delete(`http://localhost:8000/api/users/${id}`);
+      await axios.delete(`https://backend-nrc.onrender.com/api/users/${id}`);
       setUsers(users.filter((user) => user._id !== id));
     } catch (err) {
       console.error("Failed to delete user:", err);
@@ -52,7 +52,7 @@ const UserDashboard: React.FC = () => {
   const handleSave = async () => {
     if (editingUser) {
       try {
-        await axios.put(`http://localhost:8000/api/users/${editingUser._id}`, editingUser);
+        await axios.put(`https://backend-nrc.onrender.com/api/users/${editingUser._id}`, editingUser);
         const updatedUsers = users.map((user) =>
           user._id === editingUser._id ? { ...user, ...editingUser } : user
         );
@@ -64,7 +64,7 @@ const UserDashboard: React.FC = () => {
       }
     } else {
       try {
-        const res = await axios.post("http://localhost:8000/api/register", newUser);
+        const res = await axios.post("https://backend-nrc.onrender.com/api/register", newUser);
         setUsers([...users, res.data]);
         setShowModal(false);
         setNewUser({});

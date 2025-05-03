@@ -19,7 +19,7 @@ import Events from "./pages/dashboard/announcement";
 import Users from "./pages/dashboard/users"; 
 import LogOut from "./pages/dashboard/logOut";
 import Help from "./pages/dashboard/help"; 
-import DashboardHome from "./pages/dashboard/dashboard"; 
+// import DashboardHome from "./pages/dashboard/dashboard"; 
 import TeamDashboard from "./pages/dashboard/team"; 
 import MessagesDashboard from "./pages/dashboard/mesage";
 const App = () => {

@@ -1,7 +1,6 @@
 import { NavLink, Outlet } from "react-router-dom";
 import logo from "../assets/NRC.jpg"; // Adjust the path to your logo image
 import { 
-  FaTachometerAlt, 
   FaBook, 
   FaFlask, 
   FaDonate,

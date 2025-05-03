@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
-const BASE_URL = "http://localhost:8000/uploads/";
+const BASE_URL = "https://backend-nrc.onrender.com/uploads/";
 
 interface BlogPost {
   _id: string;
@@ -30,7 +30,7 @@ const Research: React.FC = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const res = await axios.get("http://localhost:8000/api/blogs");
+        const res = await axios.get("https://backend-nrc.onrender.com/api/blogs");
         setBlogs(res.data.data);
       } catch (err) {
         setError("Failed to fetch blogs.");
@@ -44,7 +44,7 @@ const Research: React.FC = () => {
 
   const handleDelete = async (id: string) => {
     try {
-      await axios.delete(`http://localhost:8000/api/blogs/${id}`);
+      await axios.delete(`https://backend-nrc.onrender.com/api/blogs/${id}`);
       setBlogs(blogs.filter((blog) => blog._id !== id));
     } catch (err) {
       console.error("Failed to delete blog:", err);
@@ -68,7 +68,7 @@ const Research: React.FC = () => {
 
       try {
         await axios.put(
-          `http://localhost:8000/api/blogs/${editingBlog._id}`,
+          `https://backend-nrc.onrender.com/api/blogs/${editingBlog._id}`,
           formData
         );
         const updatedBlogs = blogs.map((blog) =>
@@ -90,7 +90,7 @@ const Research: React.FC = () => {
       if (selectedFile.pdf) formData.append("pdf", selectedFile.pdf);
 
       try {
-        const res = await axios.post("http://localhost:8000/api/blogs", formData);
+        const res = await axios.post("https://backend-nrc.onrender.com/api/blogs", formData);
         setBlogs([...blogs, res.data]);
         setShowModal(false);
         setNewBlog({});

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
-const BASE_URL = "http://localhost:8000/uploads/";
+const BASE_URL = "https://backend-nrc.onrender.com/uploads/";
 
 interface Publication {
   _id: string;
@@ -32,7 +32,7 @@ const Publications: React.FC = () => {
   useEffect(() => {
     const fetchPublications = async () => {
       try {
-        const res = await axios.get("http://localhost:8000/api/publications");
+        const res = await axios.get("https://backend-nrc.onrender.com/api/publications");
         setPublications(res.data.data);
       } catch (err) {
         setError("Failed to fetch publications.");
@@ -48,7 +48,7 @@ const Publications: React.FC = () => {
     const confirmDelete = window.confirm("Are you sure you want to delete this publication?");
     if (confirmDelete) {
       try {
-        await axios.delete(`http://localhost:8000/api/publications/${id}`);
+        await axios.delete(`https://backend-nrc.onrender.com/api/publications/${id}`);
         setPublications(publications.filter((publication) => publication._id !== id));
       } catch (err) {
         console.error("Failed to delete publication:", err);
@@ -75,7 +75,7 @@ const Publications: React.FC = () => {
 
       try {
         await axios.put(
-          `http://localhost:8000/api/publications/${editingPublication._id}`,
+          `https://backend-nrc.onrender.com/api/publications/${editingPublication._id}`,
           formData
         );
         const updatedPublications = publications.map((publication) =>
@@ -101,7 +101,7 @@ const Publications: React.FC = () => {
       if (selectedFile.pdf) formData.append("pdf", selectedFile.pdf);
 
       try {
-        const res = await axios.post("http://localhost:8000/api/publications", formData);
+        const res = await axios.post("https://backend-nrc.onrender.com/api/publications", formData);
         setPublications([...publications, res.data]);
         setShowModal(false);
         setNewPublication({});

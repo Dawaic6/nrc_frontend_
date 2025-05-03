@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
-const BASE_URL = "http://localhost:8000/";
+const BASE_URL = "https://backend-nrc.onrender.com/";
 
 interface TeamMember {
   _id: string;
@@ -26,7 +26,7 @@ const TeamDashboard: React.FC = () => {
   useEffect(() => {
     const fetchTeamMembers = async () => {
       try {
-        const res = await axios.get("http://localhost:8000/api/team");
+        const res = await axios.get("https://backend-nrc.onrender.com/api/team");
         setTeamMembers(res.data.data);
       } catch (err) {
         setError("Failed to fetch team members.");
@@ -40,7 +40,7 @@ const TeamDashboard: React.FC = () => {
 
   const handleDelete = async (id: string) => {
     try {
-      await axios.delete(`http://localhost:8000/api/team/${id}`);
+      await axios.delete(`https://backend-nrc.onrender.com/api/team/${id}`);
       setTeamMembers(teamMembers.filter((member) => member._id !== id));
     } catch (err) {
       console.error("Failed to delete team member:", err);
@@ -70,7 +70,7 @@ const TeamDashboard: React.FC = () => {
 
       try {
         await axios.put(
-          `http://localhost:8000/api/team/${editingMember._id}`,
+          `https://backend-nrc.onrender.com/api/team/${editingMember._id}`,
           formData
         );
         const updatedMembers = teamMembers.map((member) =>
@@ -97,7 +97,7 @@ const TeamDashboard: React.FC = () => {
         formData.append("image", selectedFile.image);
 
         try {
-          const res = await axios.post("http://localhost:8000/api/team", formData);
+          const res = await axios.post("https://backend-nrc.onrender.com/api/team", formData);
           setTeamMembers([...teamMembers, res.data]);
           setShowModal(false);
           setNewMember({});
