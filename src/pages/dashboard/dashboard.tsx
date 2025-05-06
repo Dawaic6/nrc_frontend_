@@ -77,6 +77,7 @@ const Dashboard: React.FC = () => {
       </div>
 
       {/* News Table */}
+      
       <div className="overflow-x-auto mt-10 p-4 bg-white rounded shadow">
         <h2 className="text-2xl font-bold text-center mb-4">Latest News and Insights</h2>
         <table className="min-w-full border text-sm text-center">

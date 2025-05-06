@@ -91,8 +91,9 @@ const UserDashboard: React.FC = () => {
       {loading && <p>Loading...</p>}
       {error && <p className="text-red-500">{error}</p>}
 
-      <table className="table-auto w-full border-collapse border border-gray-300">
-        <thead>
+      <div className="overflow-x-auto">
+        <table className="min-w-full border-collapse border border-gray-300">
+              <thead>
           <tr>
             <th className="border border-gray-300 px-4 py-2">ID</th>
             <th className="border border-gray-300 px-4 py-2">First Name</th>
@@ -130,6 +131,7 @@ const UserDashboard: React.FC = () => {
           ))}
         </tbody>
       </table>
+      </div>
 
       {/* Modal */}
       {showModal && (

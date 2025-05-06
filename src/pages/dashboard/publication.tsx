@@ -135,8 +135,8 @@ const Publications: React.FC = () => {
 
       {loading && <p>Loading...</p>}
       {error && <p className="text-red-500">{error}</p>}
-
-      <table className="table-auto w-full border-collapse border border-gray-300">
+      <div className="overflow-x-auto">
+        <table className="min-w-full border-collapse border border-gray-300">
         <thead>
           <tr>
             <th className="border border-gray-300 px-4 py-2">ID</th>
@@ -209,6 +209,9 @@ const Publications: React.FC = () => {
           ))}
         </tbody>
       </table>
+      </div>
+
+      {/* Add New Publication Button */}
 
       {/* Modal */}
       {showModal && (
