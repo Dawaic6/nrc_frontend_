@@ -258,13 +258,14 @@ const AnnouncementsDashboard: React.FC = () => {
             />
 
             {/* File Inputs */}
+            <label htmlFor="image"> Image</label>
             <input
               type="file"
               name="image"
               onChange={handleFileChange}
-              className="mb-2 block w-full"
+              className="w-full border border-gray-300 rounded px-4 py-2 mb-4"
             />
-            <input
+            {/* <input
               type="file"
               name="video"
               onChange={handleFileChange}
@@ -275,7 +276,7 @@ const AnnouncementsDashboard: React.FC = () => {
               name="pdf"
               onChange={handleFileChange}
               className="mb-2 block w-full"
-            />
+            /> */}
 
             {/* Buttons */}
             <div className="flex justify-end gap-2">

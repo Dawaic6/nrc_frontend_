@@ -71,7 +71,7 @@ const AnnouncementsPage: React.FC = () => {
                 <img
                   src={`${BASE_URL}${a.image}`}
                   alt="announcement"
-                  className="mt-2 max-w-xs rounded"
+                  className="mt-2 max-w-xs rounded w-full"
                 />
               ) : a.video ? (
                 <video controls className="mt-2 max-w-xs rounded">
@@ -79,15 +79,6 @@ const AnnouncementsPage: React.FC = () => {
                   Your browser does not support the video tag.
                 </video>
               ) : null}
-              {a.pdf && (
-                <a
-                  href={`${BASE_URL}${a.pdf}`}
-                  download
-                  className="text-blue-500 underline block"
-                >
-                  Download PDF
-                </a>
-              )}
               {a.link && (
                 <a
                   href={a.link}
@@ -117,13 +108,13 @@ const AnnouncementsPage: React.FC = () => {
                 <img
                   src={`${BASE_URL}${o.image}`}
                   alt="opportunity"
-                  className="mt-2 max-w-xs rounded"
+                  className="mt-2 max-w-xs rounded w-full"
                 />
-              ) : o.video ? (
-                <video controls className="mt-2 max-w-xs rounded">
-                  <source src={`${BASE_URL}${o.video}`} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
+              // ) : o.video ? (
+              //   <video controls className="mt-2 max-w-xs rounded">
+              //     <source src={`${BASE_URL}${o.video}`} type="video/mp4" />
+              //     Your browser does not support the video tag.
+              //   </video>
               ) : null}
               {o.link && (
                 <a

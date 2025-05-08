@@ -13,7 +13,7 @@ interface Publication {
   video?: string;
   category: "Research" | "Reports" | "Resources";
   isOngoing?: boolean;
-  disclaimer?: string;
+  longDescription?: string;
 }
 
 const Publications: React.FC = () => {
@@ -68,7 +68,7 @@ const Publications: React.FC = () => {
       formData.append("shortDescription", editingPublication.shortDescription || "");
       formData.append("category", editingPublication.category);
       formData.append("isOngoing", editingPublication.isOngoing ? "true" : "false");
-      formData.append("disclaimer", editingPublication.disclaimer || "");
+      formData.append("disclaimer", editingPublication.longDescription|| "");
       if (selectedFile.image) formData.append("image", selectedFile.image);
       if (selectedFile.video) formData.append("video", selectedFile.video);
       if (selectedFile.pdf) formData.append("pdf", selectedFile.pdf);
@@ -95,7 +95,7 @@ const Publications: React.FC = () => {
       formData.append("shortDescription", newPublication.shortDescription || "");
       formData.append("category", newPublication.category || "Research");
       formData.append("isOngoing", newPublication.isOngoing ? "true" : "false");
-      formData.append("disclaimer", newPublication.disclaimer || "");
+      formData.append("disclaimer", newPublication.longDescription || "");
       if (selectedFile.image) formData.append("image", selectedFile.image);
       if (selectedFile.video) formData.append("video", selectedFile.video);
       if (selectedFile.pdf) formData.append("pdf", selectedFile.pdf);
@@ -144,6 +144,7 @@ const Publications: React.FC = () => {
             <th className="border border-gray-300 px-4 py-2">Category</th>
             <th className="border border-gray-300 px-4 py-2">Ongoing</th>
             <th className="border border-gray-300 px-4 py-2">Short Desc</th>
+            <th className="border border-gray-300 px-4 py-2">Long Desc</th>
             <th className="border border-gray-300 px-4 py-2">Photo</th>
             <th className="border border-gray-300 px-4 py-2">Video</th>
             <th className="border border-gray-300 px-4 py-2">PDF</th>
@@ -161,6 +162,9 @@ const Publications: React.FC = () => {
               </td>
               <td className="border border-gray-300 px-4 py-2">
                 {publication.shortDescription || "N/A"}
+              </td>
+              <td className="border border-gray-300 px-4 py-2">
+                {publication.longDescription || "N/A"}
               </td>
               <td className="border border-gray-300 px-4 py-2">
                 {publication.image ? (
@@ -295,11 +299,11 @@ const Publications: React.FC = () => {
               <textarea
                 id="disclaimer"
                 placeholder="Disclaimer"
-                value={editingPublication?.disclaimer || newPublication.disclaimer || ""}
+                value={editingPublication?.longDescription || newPublication.longDescription || ""}
                 onChange={(e) =>
                   editingPublication
-                    ? setEditingPublication({ ...editingPublication, disclaimer: e.target.value })
-                    : setNewPublication({ ...newPublication, disclaimer: e.target.value })
+                    ? setEditingPublication({ ...editingPublication, longDescription: e.target.value })
+                    : setNewPublication({ ...newPublication, longDescription: e.target.value })
                 }
                 className="w-full border border-gray-300 rounded px-4 py-2 mb-4"
               />

@@ -13,7 +13,7 @@ interface Publication {
   video?: string;
   category: "Research" | "Reports" | "Resources";
   isOngoing?: boolean;
-  disclaimer?: string;
+  longDescription?: string;
   createdAt?: string;
 }
 
@@ -33,8 +33,9 @@ const Publications: React.FC = () => {
           ...item,
           title: item.title?.replace(/^"|"$/g, "") || "Untitled",
           shortDescription: item.shortDescription?.replace(/^"|"$/g, "") || "No description available",
-          disclaimer: item.disclaimer?.replace(/^"|"$/g, "") || "",
+          longDescription: item.longDescription?.replace(/^"|"$/g, "") || "No additional information available.",
         }));
+        
 
         // Separate ongoing and published research based on `isOngoing` field
         const ongoing: Publication[] = cleaned.filter((item: Publication) => item.isOngoing);
@@ -73,7 +74,7 @@ const Publications: React.FC = () => {
                 image={item.image ? BASE_URL + item.image : ""}
                 title={item.title}
                 shortDescription={(item.shortDescription || "").slice(0, 100) + "..."}
-                longDescription={item.disclaimer || "No additional information available."}
+                longDescription={item.longDescription || "No additional information available."}
               />
             ))
           ) : (
@@ -96,7 +97,7 @@ const Publications: React.FC = () => {
                 image={item.image ? BASE_URL + item.image : ""}
                 title={item.title}
                 shortDescription={(item.shortDescription || "").slice(0, 100) + "..."}
-                longDescription={item.disclaimer || "No additional information available."}
+                longDescription={item.longDescription || "No additional information available."}
               />
             ))
           ) : (

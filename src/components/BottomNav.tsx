@@ -61,7 +61,7 @@ const BottomNav = () => {
           mobileOpen ? "flex flex-col items-center space-y-4" : "hidden"
         } md:flex md:flex-row md:justify-center md:space-x-10 text-white font-bold text-sm relative`}
       >
-        <NavLink to="/home" className={({ isActive }) => isActive ? activeClass : linkClass}>Home</NavLink>
+        <NavLink to="/" className={({ isActive }) => isActive ? activeClass : linkClass}>Home</NavLink>
 
         {/* About */}
         <div
