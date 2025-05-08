@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import MainLayout from "../layouts/MainLayout";
 
-const BASE_URL = "https://backend-nrc.onrender.com/uploads/";
+const BASE_URL = "http://localhost:8000/uploads/";
 
 interface Announcement {
   _id: string;
@@ -24,7 +24,7 @@ const AnnouncementsPage: React.FC = () => {
   useEffect(() => {
     const fetchAnnouncements = async () => {
       try {
-        const res = await axios.get("https://backend-nrc.onrender.com/api/announcements");
+        const res = await axios.get("http://localhost:8000/api/announcements");
         const data = res.data.data;
 
         // Filter announcements and opportunities based on category
@@ -71,7 +71,7 @@ const AnnouncementsPage: React.FC = () => {
                 <img
                   src={`${BASE_URL}${a.image}`}
                   alt="announcement"
-                  className="mt-2 max-w-xs rounded w-full"
+                  className="mt-2 rounded "
                 />
               ) : a.video ? (
                 <video controls className="mt-2 max-w-xs rounded">
@@ -79,6 +79,15 @@ const AnnouncementsPage: React.FC = () => {
                   Your browser does not support the video tag.
                 </video>
               ) : null}
+              {a.pdf && ( 
+                <a
+                  href={`${BASE_URL}${a.pdf}`}
+                  download
+                  className="text-blue-500 underline block"
+                >
+                  Download PDF
+                </a>
+              )}
               {a.link && (
                 <a
                   href={a.link}
@@ -108,13 +117,13 @@ const AnnouncementsPage: React.FC = () => {
                 <img
                   src={`${BASE_URL}${o.image}`}
                   alt="opportunity"
-                  className="mt-2 max-w-xs rounded w-full"
+                  className="mt-2  rounded"
                 />
-              // ) : o.video ? (
-              //   <video controls className="mt-2 max-w-xs rounded">
-              //     <source src={`${BASE_URL}${o.video}`} type="video/mp4" />
-              //     Your browser does not support the video tag.
-              //   </video>
+              ) : o.video ? (
+                <video controls className="mt-2 max-w-xs rounded">
+                  <source src={`${BASE_URL}${o.video}`} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
               ) : null}
               {o.link && (
                 <a
