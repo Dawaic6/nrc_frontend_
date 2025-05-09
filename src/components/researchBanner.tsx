@@ -106,7 +106,7 @@ const NursingResearchBanner = () => {
         </button>
       </div>
     ))}
-      {/* Navigation Arrows */}
+      {/* Navigation Arrows */} 
       <button
         onClick={goToPrev}
         className="absolute left-4 top-1/2 -translate-y-1/2 z-30 bg-black bg-opacity-40 text-white p-2 rounded-full hover:bg-opacity-60 transition-all focus:outline-none"

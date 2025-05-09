@@ -45,7 +45,7 @@ const BottomNav = () => {
   }, []);
 
   return (
-    <nav className="bg-[#414868] px-4 py-3 sticky top-0 z-10">
+    <nav className="bg-[#414868] px-4 py-3 ">
       {/* Mobile Menu Button */}
       <div className="md:hidden flex justify-between items-center text-white">
         <h1 className="font-bold text-lg">NRC</h1>

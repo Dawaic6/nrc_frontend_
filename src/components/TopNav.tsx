@@ -3,7 +3,7 @@ import NRC from "../assets/NRC.jpg";
 
 const TopNav = () => {
     return (
-        <nav className="sticky top-0 z-10 bg-white flex justify-between items-center px-4 py-2 md:py-[10px]">
+        <nav className=" bg-white flex justify-between items-center px-4 py-2 md:py-[10px]">
             <div className="flex items-center gap-2 md:gap-4">
                 <img src={NRC} alt="logo" className="w-8 h-8 md:w-10 md:h-10" />
                 {/* Hide title on small screens */}
