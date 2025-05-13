@@ -87,7 +87,7 @@ const Home: React.FC = () => {
 
   return (
     <MainLayout>
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto  py-1">
         <NursingResearchBanner />
 
         {/* Section: Recent Publications */}
@@ -141,6 +141,33 @@ const Home: React.FC = () => {
             )}
           </div>
         </section>
+        {/* Section: Latest News and Insights */}
+        <section className="py-10 px-4">
+          <h2 className="text-3xl font-bold text-center">Upcoming Events</h2>
+          <div className="mt-4 h-1 w-20 bg-blue-600 mx-auto mb-8"></div>
+
+          {loadingBlogs && <p className="text-center">Loading news...</p>}
+          {errorBlogs && <p className="text-center text-red-500">{errorBlogs}</p>}
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 place-items-center">
+            {blogs.length > 0 ? (
+              blogs.map((item) => (
+                <NewsCard
+                  key={item._id}
+                  image={item.image ? BASE_URL + item.image : ""}
+                  video={item.video ? BASE_URL + item.video : undefined}
+                  title={item.title}
+                  shortDescription={(item.shortDescription || "").slice(0, 100) + "..."}
+                  longDescription={item.longDescription}
+                  pdf={item.pdf ? BASE_URL + item.pdf : undefined}
+                />
+              ))
+            ) : (
+              !loadingBlogs && <p className="text-center">No news available.</p>
+            )}
+          </div>
+        </section>
+
 
         {/* Section: Twitter */}
         <div className="min-h-screen bg-white flex items-center justify-center">

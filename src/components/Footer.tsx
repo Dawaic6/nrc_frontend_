@@ -64,7 +64,7 @@ const Footer: React.FC = () => {
                   className="pl-10 pr-3 py-2 rounded-lg text-gray-800 border border-gray-300 w-full"
                 />
               </div>
-              <button className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-medium transition">
+              <button className="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-lg font-medium transition">
                 Subscribe
               </button>
             </div>

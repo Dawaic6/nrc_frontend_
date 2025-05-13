@@ -22,6 +22,7 @@ import Help from "./pages/dashboard/help";
 // import DashboardHome from "./pages/dashboard/dashboard"; 
 import TeamDashboard from "./pages/dashboard/team"; 
 import MessagesDashboard from "./pages/dashboard/mesage";
+import DashboardAnnouncements from "./pages/dashboard/UpcomingEvents"; // Import the new component
 const App = () => {
   return (
     <Router>
@@ -53,6 +54,7 @@ const App = () => {
           <Route path="TeamDashboard" element={<TeamDashboard />} /> {/* /dashboard/team */}
           <Route path="logout" element={<LogOut />} /> {/* /dashboard/logout */}
           <Route path="help" element={<Help />} /> {/* /dashboard/help */}
+          <Route path="Dashboardannouncements" element={<DashboardAnnouncements />} /> {/* /dashboard/announcements */}
           <Route path="message" element={<MessagesDashboard />} /> {/* /dashboard/help */}
 
         </Route>

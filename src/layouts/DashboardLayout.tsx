@@ -14,6 +14,7 @@ import {
   FaTimes,
 } from "react-icons/fa";
 import { ReactNode } from "react";
+import { Fa4 } from "react-icons/fa6";
 
 interface MenuItemProps {
   to: string;
@@ -66,11 +67,13 @@ const DashboardLayout = () => {
             <MenuItem to="/dashboard/research" icon={<FaFlask />} label="Blogs" />
             <MenuItem to="/dashboard/donations" icon={<FaDonate />} label="Donations" />
             <MenuItem to="/dashboard/events" icon={<FaCalendarAlt />} label="Announcements" />
+            <MenuItem to="/dashboard/Dashboardannouncements" icon={<Fa4 />} label="Upcoming Events" />
             <MenuItem to="/dashboard/message" icon={<FaEnvelope />} label="Messages" />
             <MenuItem to="/dashboard/TeamDashboard" icon={<FaUsers />} label="Team" />
             <MenuItem to="/dashboard/users" icon={<FaUsers />} label="Users" />
             <MenuItem to="/dashboard/help" icon={<FaQuestionCircle />} label="Help" />
             <MenuItem to="/dashboard/logout" icon={<FaSignOutAlt />} label="Log Out" isLogout />
+
           </ul>
         </nav>
 
