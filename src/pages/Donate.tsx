@@ -49,7 +49,7 @@ const DonationForm: React.FC = () => {
     setSuccess(false);
 
     try {
-      const response = await fetch('https://backend-nrc.onrender.com/donations', {
+      const response = await fetch('https://backend-nrc.onrender.com/api/donations', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
