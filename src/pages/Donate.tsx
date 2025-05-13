@@ -3,7 +3,6 @@ import MainLayout from '../layouts/MainLayout';
 
 interface DonationData {
   amount: string;
-  customAmount: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -13,13 +12,11 @@ interface DonationData {
   city: string;
   country: string;
   phone: string;
-  paymentMethod: 'paypal' | 'credit-card' | 'bank-transfer';
 }
 
 const DonationForm: React.FC = () => {
   const [donationData, setDonationData] = useState<DonationData>({
-    amount: '1000',
-    customAmount: '',
+    amount: '',
     firstName: '',
     lastName: '',
     email: '',
@@ -29,8 +26,11 @@ const DonationForm: React.FC = () => {
     city: '',
     country: '',
     phone: '',
-    paymentMethod: 'credit-card'
   });
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
@@ -42,17 +42,48 @@ const DonationForm: React.FC = () => {
     }));
   };
 
-  const handleAmountSelection = (amount: string) => {
-    setDonationData(prev => ({
-      ...prev,
-      amount,
-      customAmount: ''
-    }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Donation submitted:', donationData);
+    setIsLoading(true);
+    setError(null);
+    setSuccess(false);
+
+    try {
+      const response = await fetch('https://backend-nrc.onrender.com/donations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(donationData),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to submit donation');
+      }
+
+      const result = await response.json();
+      console.log('Donation submitted successfully:', result);
+      setSuccess(true);
+      // Reset form after successful submission
+      setDonationData({
+        amount: '',
+        firstName: '',
+        lastName: '',
+        email: '',
+        status: '',
+        address: '',
+        contactOk: false,
+        city: '',
+        country: '',
+        phone: '',
+      });
+    } catch (err) {
+      console.error('Error submitting donation:', err);
+      setError(err instanceof Error ? err.message : 'An unknown error occurred');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -71,64 +102,27 @@ const DonationForm: React.FC = () => {
 
           <div className="bg-white shadow shadow-black rounded-lg overflow-hidden">
             <div className="p-6 sm:p-8">
-              <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0 mb-8">
-                <button
-                  type="button"
-                  className={`px-6 py-3 rounded-md font-medium ${donationData.amount === 'one-time' ? 'bg-green-600 text-white' : 'bg-gray-200 text-gray-700'}`}
-                  onClick={() => handleAmountSelection('one-time')}
-                >
-                  Give Today
-                </button>
-                <button
-                  type="button"
-                  className={`px-6 py-3 rounded-md font-medium ${donationData.amount === 'monthly' ? 'bg-green-600 text-white' : 'bg-gray-200 text-gray-700'}`}
-                  onClick={() => handleAmountSelection('monthly')}
-                >
-                  Give Monthly
-                </button>
-              </div>
+              <h2 className='text-2xl pb-3'>Leave your information and the amount you are willing to offer.</h2>
+              <p className='pb-4'>
+                Once you press the submit button, your details will be safely stored in the NRC database and kept confidential. 
+                After submitting, you will receive all the available account options you can use to complete your donation—whether
+                it's a one-time gift or a monthly contribution. Your support means a lot to us.
+              </p>
 
-              <h2 className="text-xl font-semibold mb-4">Choose amount or enter your own</h2>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
-                {['100', '500', '1000', 'custom'].map((amount) => (
-                  <button
-                    key={amount}
-                    type="button"
-                    className={`py-3 px-4 border rounded-md text-center ${donationData.amount === amount ? 'border-green-600 bg-indigo-50 text-green-700' : 'border-gray-300'}`}
-                    onClick={() => amount === 'custom' ? null : handleAmountSelection(amount)}
-                  >
-                    {amount === 'custom' ? (
-                      <input
-                        type="text"
-                        placeholder="Enter amount"
-                        className="w-full text-center outline-none bg-transparent"
-                        value={donationData.customAmount}
-                        onChange={(e) => {
-                          setDonationData(prev => ({
-                            ...prev,
-                            customAmount: e.target.value,
-                            amount: 'custom'
-                          }));
-                        }}
-                      />
-                    ) : (
-                      `$${amount}`
-                    )}
-                  </button>
-                ))}
-              </div>
+              {/* Success Message */}
+              {success && (
+                <div className="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded">
+                  <p>Thank you for your donation! Your information has been submitted successfully.</p>
+                  <p>We'll send the payment instructions to your email shortly.</p>
+                </div>
+              )}
 
-              <div className="flex justify-end mb-8">
-                <select 
-                  className="border border-gray-300 rounded-md px-3 py-2"
-                  value={donationData.amount === 'custom' ? 'USD' : donationData.amount}
-                  onChange={(e) => setDonationData(prev => ({...prev, amount: e.target.value}))}
-                >
-                  <option value="USD">USD</option>
-                  <option value="EUR">EUR</option>
-                  <option value="GBP">GBP</option>
-                </select>
-              </div>
+              {/* Error Message */}
+              {error && (
+                <div className="mb-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+                  {error}
+                </div>
+              )}
 
               <h2 className="text-xl font-semibold mb-4 border-t pt-6">Your Information</h2>
               <form onSubmit={handleSubmit}>
@@ -219,71 +213,52 @@ const DonationForm: React.FC = () => {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Country*</label>
-                    <select
+                    <input
+                      type="text"
+                      placeholder="your country name"
                       name="country"
                       required
                       className="w-full px-3 py-2 border border-gray-300 rounded-md"
                       value={donationData.country}
                       onChange={handleChange}
-                    >
-                      <option value="">Select the country</option>
-                      <option value="US">United States</option>
-                      <option value="RW">Rwanda</option>
-                      <option value="UK">United Kingdom</option>
-                    </select>
+                    />
                   </div>
                 </div>
 
                 <div className="mb-8">
                   <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number*</label>
                   <div className="flex">
-                    <select className="px-3 py-2 border border-gray-300 rounded-l-md">
-                      <option>+250</option>
-                      <option>+358</option>
-                      <option>+359</option>
-                    </select>
                     <input
                       type="tel"
+                      placeholder="+250 (start with country code)"
                       name="phone"
                       required
-                      className="flex-1 px-3 py-2 border-t border-b border-r border-gray-300 rounded-r-md"
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-md"
                       value={donationData.phone}
                       onChange={handleChange}
                     />
                   </div>
                 </div>
 
-                <h2 className="text-xl font-semibold mb-4 border-t pt-6">Payment Method</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-                  <button
-                    type="button"
-                    className={`py-3 px-4 border rounded-md text-center ${donationData.paymentMethod === 'paypal' ? 'border-green-600 bg-indigo-50 text-green-700' : 'border-gray-300'}`}
-                    onClick={() => setDonationData(prev => ({...prev, paymentMethod: 'paypal'}))}
-                  >
-                    PayPal
-                  </button>
-                  <button
-                    type="button"
-                    className={`py-3 px-4 border rounded-md text-center ${donationData.paymentMethod === 'credit-card' ? 'border-green-600 bg-indigo-50 text-green-700' : 'border-gray-300'}`}
-                    onClick={() => setDonationData(prev => ({...prev, paymentMethod: 'credit-card'}))}
-                  >
-                    Credit Card
-                  </button>
-                  <button
-                    type="button"
-                    className={`py-3 px-4 border rounded-md text-center ${donationData.paymentMethod === 'bank-transfer' ? 'border-green-600 bg-indigo-50 text-green-700' : 'border-gray-300'}`}
-                    onClick={() => setDonationData(prev => ({...prev, paymentMethod: 'bank-transfer'}))}
-                  >
-                    Bank Transfer
-                  </button>
-                </div>
+                <h2 className="text-xl font-semibold mb-4 border-t pt-6">Donation Amount</h2>
+                <input
+                  type="number"
+                  name="amount"
+                  placeholder="Enter amount"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                  value={donationData.amount}
+                  onChange={handleChange}
+                />
 
-                <div className="text-center">
+                <div className="text-center pt-6">
                   <button
                     type="submit"
-                    className="bg-green-600 text-white px-6 py-3 rounded-md font-medium hover:bg-green-700 transition"
+                    disabled={isLoading}
+                    className={`bg-green-600 text-white px-6 py-3 rounded-md font-medium hover:bg-green-700 transition ${
+                      isLoading ? 'opacity-50 cursor-not-allowed' : ''
+                    }`}
                   >
-                    Submit Donation
+                    {isLoading ? 'Submitting...' : 'Submit'}
                   </button>
                 </div>
               </form>
