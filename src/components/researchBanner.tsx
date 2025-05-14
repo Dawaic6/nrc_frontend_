@@ -101,7 +101,7 @@ const NursingResearchBanner = () => {
         <p className="text-lg md:text-xl lg:text-2xl text-white mb-6">
           {slide.content}
         </p>
-        <button className="px-6 py-2 bg-green-700 text-white rounded-lg hover:bg-green-800 transition-colors">
+        <button className="px-6 py-2 bg-green-800 text-white rounded-lg hover:bg-green-700 transition-colors">
           {slide.cta}
         </button>
       </div>

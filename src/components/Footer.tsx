@@ -1,5 +1,5 @@
 import React from "react";
-import { FaTwitter, FaInstagram, FaFacebook } from "react-icons/fa";
+import { FaTwitter, FaInstagram, FaYoutube } from "react-icons/fa";
 import { FiMail } from "react-icons/fi";
 import logo from "../assets/NRC.jpg";
 
@@ -14,9 +14,9 @@ const Footer: React.FC = () => {
             <span className="font-bold text-center sm:text-left">Nursing Research Club</span>
           </a>
           <div className="flex space-x-4 text-xl">
-            <a href="#" className="hover:text-gray-400"><FaTwitter /></a>
-            <a href="#" className="hover:text-gray-400"><FaInstagram /></a>
-            <a href="#" className="hover:text-gray-400"><FaFacebook /></a>
+            <a href=" https://x.com/NursingRClub  " className="hover:text-gray-400"><FaTwitter /></a>
+            <a href=" https://www.instagram.com/nursing_research_club" className="hover:text-gray-400"><FaInstagram /></a>
+            <a href=" https://www.youtube.com/@NursingresearchClub" className="hover:text-gray-400"><FaYoutube /></a>
           </div>
         </div>
 
@@ -24,9 +24,9 @@ const Footer: React.FC = () => {
         <div className="text-center sm:text-left">
           <h3 className="font-bold mb-3 text-lg">Services</h3>
           <ul className="space-y-2">
-            <li><a href="#" className="hover:underline hover:text-green-400">Research</a></li>
+            <li><a href="/blogs" className="hover:underline hover:text-green-400">Research</a></li>
             <li><a href="#" className="hover:underline hover:text-green-400">Courses</a></li>
-            <li><a href="#" className="hover:underline hover:text-green-400">Publication</a></li>
+            <li><a href="/publication" className="hover:underline hover:text-green-400">Publication</a></li>
           </ul>
         </div>
 
@@ -34,18 +34,18 @@ const Footer: React.FC = () => {
         <div className="text-center sm:text-left">
           <h3 className="font-bold mb-3 text-lg">NRC</h3>
           <ul className="space-y-2">
-            <li><a href="#" className="hover:underline hover:text-green-400">About Us</a></li>
-            <li><a href="#" className="hover:underline hover:text-green-400">Publication</a></li>
-            <li><a href="#" className="hover:underline hover:text-green-400">Join Us</a></li>
+            <li><a href="/about" className="hover:underline hover:text-green-400">About Us</a></li>
+            <li><a href="/publication" className="hover:underline hover:text-green-400">Publication</a></li>
+            <li><a href="/contact" className="hover:underline hover:text-green-400">Join Us</a></li>
           </ul>
         </div>
 
         {/* Contact */}
-        <div className="text-center sm:text-left">
+        <div className="text-center sm:text-left ml-[-2rem]">
           <h3 className="font-bold mb-3 text-lg">Contact</h3>
           <div className="space-y-2">
-            <p>Call: <a href="tel:+250788844556" className="hover:underline hover:text-green-400">+250788844556</a></p>
-            <p>Email: <a href="mailto:NRC@gmail.com" className="hover:underline hover:text-green-400">NRC@gmail.com</a></p>
+            <p>Call: <a href="#" className="hover:underline hover:text-green-400">+250791556572</a></p>
+            <p>Email: <a href=" nresearchclub@gmail.com" className="hover:underline hover:text-green-400"> nresearchclub@gmail.com</a></p>
             <p>Kigali, Rwanda</p>
           </div>
         </div>
@@ -64,7 +64,7 @@ const Footer: React.FC = () => {
                   className="pl-10 pr-3 py-2 rounded-lg text-gray-800 border border-gray-300 w-full"
                 />
               </div>
-              <button className="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-lg font-medium transition">
+              <button className="bg-green-800 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium transition">
                 Subscribe
               </button>
             </div>

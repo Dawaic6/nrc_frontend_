@@ -148,7 +148,7 @@ const SignInForm: React.FC = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className={`w-full bg-green-800 text-white py-2 font-semibold hover:bg-green-900 transition ${
+                className={`w-full bg-green-800 text-white py-2 font-semibold hover:bg-green-700 transition ${
                   loading ? "opacity-70 cursor-not-allowed" : ""
                 }`}
               >

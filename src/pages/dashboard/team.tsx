@@ -22,6 +22,17 @@ const TeamDashboard: React.FC = () => {
   const [editingMember, setEditingMember] = useState<TeamMember | null>(null);
   const [newMember, setNewMember] = useState<Partial<TeamMember>>({});
   const [selectedFile, setSelectedFile] = useState<{ image?: File }>({});
+  const [saveStatus, setSaveStatus] = useState<{
+    loading: boolean;
+    success: boolean;
+    error: boolean;
+    message: string;
+  }>({
+    loading: false,
+    success: false,
+    error: false,
+    message: "",
+  });
 
   useEffect(() => {
     const fetchTeamMembers = async () => {
@@ -50,25 +61,28 @@ const TeamDashboard: React.FC = () => {
   const handleEdit = (member: TeamMember) => {
     setEditingMember(member);
     setShowModal(true);
+    setSaveStatus({ loading: false, success: false, error: false, message: "" });
   };
 
   const handleSave = async () => {
     const formData = new FormData();
-    if (editingMember) {
-      formData.append("name", editingMember.name);
-      formData.append("role", editingMember.role);
-      formData.append("category", editingMember.category);
-      if (editingMember.shortDescription) {
-        formData.append("shortDescription", editingMember.shortDescription);
-      }
-      if (editingMember.year) {
-        formData.append("year", editingMember.year);
-      }
-      if (selectedFile.image) {
-        formData.append("image", selectedFile.image);
-      }
+    setSaveStatus({ loading: true, success: false, error: false, message: "" });
 
-      try {
+    try {
+      if (editingMember) {
+        formData.append("name", editingMember.name);
+        formData.append("role", editingMember.role);
+        formData.append("category", editingMember.category);
+        if (editingMember.shortDescription) {
+          formData.append("shortDescription", editingMember.shortDescription);
+        }
+        if (editingMember.year) {
+          formData.append("year", editingMember.year);
+        }
+        if (selectedFile.image) {
+          formData.append("image", selectedFile.image);
+        }
+
         await axios.put(
           `https://backend-nrc.onrender.com/api/team/${editingMember._id}`,
           formData
@@ -77,35 +91,44 @@ const TeamDashboard: React.FC = () => {
           member._id === editingMember._id ? { ...member, ...editingMember } : member
         );
         setTeamMembers(updatedMembers);
-        setShowModal(false);
-        setEditingMember(null);
-        setSelectedFile({});
-      } catch (err) {
-        console.error("Failed to update team member:", err);
-      }
-    } else {
-      formData.append("name", newMember.name || "");
-      formData.append("role", newMember.role || "");
-      formData.append("category", newMember.category || "");
-      if (newMember.shortDescription) {
-        formData.append("shortDescription", newMember.shortDescription);
-      }
-      if (newMember.year) {
-        formData.append("year", newMember.year);
-      }
-      if (selectedFile.image) {
-        formData.append("image", selectedFile.image);
+        setSaveStatus({ loading: false, success: true, error: false, message: "Saved successfully!" });
+        
+        setTimeout(() => {
+          setShowModal(false);
+          setEditingMember(null);
+          setSelectedFile({});
+          setSaveStatus({ loading: false, success: false, error: false, message: "" });
+        }, 2000);
+      } else {
+        formData.append("name", newMember.name || "");
+        formData.append("role", newMember.role || "");
+        formData.append("category", newMember.category || "");
+        if (newMember.shortDescription) {
+          formData.append("shortDescription", newMember.shortDescription);
+        }
+        if (newMember.year) {
+          formData.append("year", newMember.year);
+        }
+        if (selectedFile.image) {
+          formData.append("image", selectedFile.image);
 
-        try {
           const res = await axios.post("https://backend-nrc.onrender.com/api/team", formData);
           setTeamMembers([...teamMembers, res.data]);
-          setShowModal(false);
-          setNewMember({});
-          setSelectedFile({});
-        } catch (err) {
-          console.error("Failed to create team member:", err);
+          setSaveStatus({ loading: false, success: true, error: false, message: "Saved successfully!" });
+          
+          setTimeout(() => {
+            setShowModal(false);
+            setNewMember({});
+            setSelectedFile({});
+            setSaveStatus({ loading: false, success: false, error: false, message: "" });
+          }, 2000);
+        } else {
+          setSaveStatus({ loading: false, success: false, error: true, message: " required fields" });
         }
       }
+    } catch (err) {
+      console.error("Failed to save team member:", err);
+      setSaveStatus({ loading: false, success: false, error: true, message: "Failed to save. Please try again." });
     }
   };
 
@@ -125,6 +148,7 @@ const TeamDashboard: React.FC = () => {
           setNewMember({});
           setEditingMember(null);
           setShowModal(true);
+          setSaveStatus({ loading: false, success: false, error: false, message: "" });
         }}
       >
         + New
@@ -135,57 +159,55 @@ const TeamDashboard: React.FC = () => {
 
       <div className="overflow-x-auto">
         <table className="min-w-full border-collapse border border-gray-300">
-              <thead>
-          <tr>
-            <th className="border border-gray-300 px-4 py-2">ID</th>
-            <th className="border border-gray-300 px-4 py-2">Name</th>
-            <th className="border border-gray-300 px-4 py-2">Role</th>
-            <th className="border border-gray-300 px-4 py-2">Category</th>
-            <th className="border border-gray-300 px-4 py-2">Year</th>
-            <th className="border border-gray-300 px-4 py-2">Photo</th>
-            <th className="border border-gray-300 px-4 py-2">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {teamMembers.map((member) => (
-            <tr key={member._id}>
-              <td className="border border-gray-300 px-4 py-2">{member._id}</td>
-              <td className="border border-gray-300 px-4 py-2">{member.name}</td>
-              <td className="border border-gray-300 px-4 py-2">{member.role}</td>
-              <td className="border border-gray-300 px-4 py-2">{member.category}</td>
-              <td className="border border-gray-300 px-4 py-2">{member.year || "N/A"}</td>
-              <td className="border border-gray-300 px-4 py-2">
-                {member.image ? (
-                  <img
-                    src={BASE_URL + member.image}
-                    alt="Team Member"
-                    className="w-16 h-16 object-cover"
-                  />
-                ) : (
-                  "N/A"
-                )}
-              </td>
-              <td className="border border-gray-300 px-4 py-2">
-                <button
-                  className="text-blue-500 hover:text-blue-700 mr-2"
-                  onClick={() => handleEdit(member)}
-                >
-                  <FaEdit />
-                </button>
-                <button
-                  className="text-red-500 hover:text-red-700"
-                  onClick={() => handleDelete(member._id)}
-                >
-                  <FaTrash />
-                </button>
-              </td>
+          <thead>
+            <tr>
+              <th className="border border-gray-300 px-4 py-2">ID</th>
+              <th className="border border-gray-300 px-4 py-2">Name</th>
+              <th className="border border-gray-300 px-4 py-2">Role</th>
+              <th className="border border-gray-300 px-4 py-2">Category</th>
+              <th className="border border-gray-300 px-4 py-2">Year</th>
+              <th className="border border-gray-300 px-4 py-2">Photo</th>
+              <th className="border border-gray-300 px-4 py-2">Action</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {teamMembers.map((member) => (
+              <tr key={member._id}>
+                <td className="border border-gray-300 px-4 py-2">{member._id}</td>
+                <td className="border border-gray-300 px-4 py-2">{member.name}</td>
+                <td className="border border-gray-300 px-4 py-2">{member.role}</td>
+                <td className="border border-gray-300 px-4 py-2">{member.category}</td>
+                <td className="border border-gray-300 px-4 py-2">{member.year || "N/A"}</td>
+                <td className="border border-gray-300 px-4 py-2">
+                  {member.image ? (
+                    <img
+                      src={BASE_URL + member.image}
+                      alt="Team Member"
+                      className="w-16 h-16 object-cover"
+                    />
+                  ) : (
+                    "N/A"
+                  )}
+                </td>
+                <td className="border border-gray-300 px-4 py-2">
+                  <button
+                    className="text-blue-500 hover:text-blue-700 mr-2"
+                    onClick={() => handleEdit(member)}
+                  >
+                    <FaEdit />
+                  </button>
+                  <button
+                    className="text-red-500 hover:text-red-700"
+                    onClick={() => handleDelete(member._id)}
+                  >
+                    <FaTrash />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
-
-      {/* Modal Overlay */}
 
       {/* Modal */}
       {showModal && (
@@ -302,13 +324,25 @@ const TeamDashboard: React.FC = () => {
                 className="w-full border border-gray-300 rounded px-4 py-2 mb-4"
               />
 
+              {/* Status Message */}
+              {saveStatus.loading && (
+                <div className="mb-4 text-blue-600">Saving...</div>
+              )}
+              {saveStatus.success && (
+                <div className="mb-4 text-green-600">{saveStatus.message}</div>
+              )}
+              {saveStatus.error && (
+                <div className="mb-4 text-red-600">{saveStatus.message}</div>
+              )}
+
               {/* Buttons */}
               <button
                 type="button"
                 onClick={handleSave}
-                className="bg-blue-600 text-white px-4 py-2 rounded"
+                disabled={saveStatus.loading}
+                className={`px-4 py-2 rounded ${saveStatus.loading ? 'bg-blue-300' : 'bg-blue-600'} text-white`}
               >
-                Save
+                {saveStatus.loading ? 'Saving...' : 'Save'}
               </button>
               <button
                 type="button"

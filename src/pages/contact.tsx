@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import MainLayout from '../layouts/MainLayout';
-import contactImage from "../assets/Screenshot 2025-03-06 195309.png";
+import contactImage from "../assets/contact.jpg";
 import axios from 'axios'; // Make sure to install axios
 
 interface FormData {
@@ -190,8 +190,8 @@ const ContactForm: React.FC = () => {
               </div>
 
               <div className="md:w-1/2 bg-[#D9D9D9] text-black p-8 sm:p-12 flex flex-col justify-center">
-                <img src={contactImage} alt="mn" />
-                <img src={contactImage} alt="mn" />
+                <img src={contactImage} alt="mn" className="w-full h-auto mt-[-3rem]" />
+                {/* <img src={contact} alt="mn" /> */}
                 <div className="space-y-6">
                   <h2 className="text-2xl font-bold">Our Contact Information</h2>
                   <div className="space-y-4">

@@ -569,7 +569,7 @@ const SignUpForm: React.FC = () => {
 
               <button
                 type="submit"
-                className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700"
+                className="w-full bg-green-800 text-white py-2 rounded hover:bg-green-700"
               >
                 Sign Up
               </button>
@@ -577,7 +577,7 @@ const SignUpForm: React.FC = () => {
 
             <p className="mt-4 text-center text-sm text-gray-600">
               Already have an account?{' '}
-              <a href="/signIn" className="text-green-700 hover:underline">Sign In</a>
+              <a href="/signIn" className="text-green-800 hover:underline">Sign In</a>
             </p>
           </div>
         </div>
