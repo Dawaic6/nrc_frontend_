@@ -67,23 +67,24 @@ const AnnouncementsPage: React.FC = () => {
             <div key={a._id} className="border p-4 rounded shadow-sm space-y-2">
               <h3 className="text-xl font-semibold">{a.title}</h3>
               <p>{a.shortDescription}</p>
-              {a.image ? (
-                <img
-                  src={`${BASE_URL}${a.image}`}
-                  alt="announcement"
-                  className=" mt-2  rounded h-auto w-full "                />
-              ) : a.video ? (
-                <video controls className="mt-2  rounded h-auto w-full ">
+              {a.video ? (
+                <video controls className="mt-2 rounded h-auto w-full">
                   <source src={`${BASE_URL}${a.video}`} type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
+              ) : a.image ? (
+                <img
+                  src={`${BASE_URL}${a.image}`}
+                  alt="announcement"
+                  className="mt-2 rounded h-auto w-full"
+                />
               ) : null}
               {a.link && (
                 <a
                   href={a.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-500 underline block"
+                  className="text-green-500 underline block"
                 >
                   View Link
                 </a>
@@ -91,10 +92,8 @@ const AnnouncementsPage: React.FC = () => {
             </div>
           ))}
         </div>
-
         {/* Divider */}
         <hr className="my-10 border-t-2" />
-
         {/* Opportunities Section */}
         <h2 className="text-2xl font-bold">🎯 Opportunities</h2>
         <div className="space-y-6">
@@ -103,24 +102,24 @@ const AnnouncementsPage: React.FC = () => {
             <div key={o._id} className="border p-4 rounded shadow-sm space-y-2">
               <h3 className="text-xl font-semibold">{o.title}</h3>
               <p>{o.shortDescription}</p>
-              {o.image ? (
+              {o.video ? (
+                <video controls className="mt-2 rounded h-auto w-full">
+                  <source src={`${BASE_URL}${o.video}`} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              ) : o.image ? (
                 <img
                   src={`${BASE_URL}${o.image}`}
                   alt="opportunity"
-                  className="mt-2 rounded h-auto w-full "
+                  className="mt-2 rounded h-auto w-full"
                 />
-              // ) : o.video ? (
-              //   <video controls className="mt-2 max-w-xs rounded">
-              //     <source src={`${BASE_URL}${o.video}`} type="video/mp4" />
-              //     Your browser does not support the video tag.
-              //   </video>
               ) : null}
               {o.link && (
                 <a
                   href={o.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-500 underline block"
+                  className="text-green-500 underline block"
                 >
                   View Link
                 </a>

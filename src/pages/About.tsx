@@ -17,7 +17,7 @@ const About = () => {
           
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold text-gray-900">Introduction</h1>
-            <div className="mt-4 h-1 w-20 bg-blue-600 mx-auto"></div>
+            <div className="mt-4 h-1 w-20 bg-green-600 mx-auto"></div>
           </div>
           <div className="grid md:grid-cols-2 gap-12 items-center ">
             <div>
@@ -66,7 +66,7 @@ NRC's membership structure thrives on inclusivity, boasting a robust and dedicat
           
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold text-gray-900">Background</h1>
-            <div className="mt-4 h-1 w-20 bg-blue-600 mx-auto"></div>
+            <div className="mt-4 h-1 w-20 bg-green-600 mx-auto"></div>
           </div>
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
@@ -107,7 +107,7 @@ NRC's membership structure thrives on inclusivity, boasting a robust and dedicat
         <section id="ourVision" className="py-16 bg-gray-50">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">Our Vision</h2>
-            <div className="mt-4 h-1 w-20 bg-blue-600 mx-auto"></div>
+            <div className="mt-4 h-1 w-20 bg-green-600 mx-auto"></div>
           </div>
           <div className="bg-white p-6 rounded-lg shadow-md max-w-3xl mx-auto text-center">
             <p className="text-gray-700 text-lg">
@@ -120,9 +120,9 @@ NRC's membership structure thrives on inclusivity, boasting a robust and dedicat
         <section id="ourMission" className="py-16 bg-white">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">Our Mission</h2>
-            <div className="mt-4 h-1 w-20 bg-blue-600 mx-auto"></div>
+            <div className="mt-4 h-1 w-20 bg-green-600 mx-auto"></div>
           </div>
-          <div className="bg-blue-50 p-6 rounded-lg shadow-md max-w-3xl mx-auto text-center">
+          <div className="bg-green-50 p-6 rounded-lg shadow-md max-w-3xl mx-auto text-center">
             <p className="text-gray-700 text-lg">
               To promote health research in the nursing profession, represent the nursing field in the community, and implement research-based activities to sustain public health.
             </p>
@@ -133,7 +133,7 @@ NRC's membership structure thrives on inclusivity, boasting a robust and dedicat
         <section className="mb-20">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-gray-900">Our Goals & Objectives</h2>
-            <div className="mt-4 h-1 w-20 bg-blue-600 mx-auto"></div>
+            <div className="mt-4 h-1 w-20 bg-green-600 mx-auto"></div>
           </div>
           <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             {[

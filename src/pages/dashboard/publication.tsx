@@ -28,12 +28,27 @@ const Publications: React.FC = () => {
     video?: File;
     pdf?: File;
   }>({});
+  const [saveStatus, setSaveStatus] = useState<{
+    loading: boolean;
+    success: boolean;
+    error: boolean;
+    message?: string;
+  }>({
+    loading: false,
+    success: false,
+    error: false,
+  });
 
   useEffect(() => {
     const fetchPublications = async () => {
       try {
         const res = await axios.get("https://backend-nrc.onrender.com/api/publications");
-        setPublications(res.data.data);
+        // Map disclaimer to longDescription for frontend use
+        const mapped = res.data.data.map((item: any) => ({
+          ...item,
+          longDescription: item.disclaimer || item.longDescription || "",
+        }));
+        setPublications(mapped);
       } catch (err) {
         setError("Failed to fetch publications.");
         console.error(err);
@@ -62,6 +77,7 @@ const Publications: React.FC = () => {
   };
 
   const handleSave = async () => {
+    setSaveStatus({ loading: true, success: false, error: false, message: "Saving... Please wait" }); // Set message immediately
     const formData = new FormData();
     if (editingPublication) {
       formData.append("title", editingPublication.title);
@@ -87,8 +103,10 @@ const Publications: React.FC = () => {
         setShowModal(false);
         setEditingPublication(null);
         setSelectedFile({});
+        setSaveStatus({ loading: false, success: true, error: false, message: "Publication updated successfully!" });
       } catch (err) {
         console.error("Failed to update publication:", err);
+        setSaveStatus({ loading: false, success: false, error: true, message: "Failed to update publication." });
       }
     } else {
       formData.append("title", newPublication.title || "");
@@ -106,8 +124,10 @@ const Publications: React.FC = () => {
         setShowModal(false);
         setNewPublication({});
         setSelectedFile({});
+        setSaveStatus({ loading: false, success: true, error: false, message: "Publication created successfully!" });
       } catch (err) {
         console.error("Failed to create publication:", err);
+        setSaveStatus({ loading: false, success: false, error: true, message: "Failed to create publication." });
       }
     }
   };
@@ -343,6 +363,17 @@ const Publications: React.FC = () => {
                 onChange={handleFileChange}
                 className="w-full border border-gray-300 rounded px-4 py-2 mb-4"
               />
+
+              {/* Status Message */}
+              {saveStatus.loading && (
+                <div className="mb-4 text-blue-600">{saveStatus.message || "Saving..."}</div>
+              )}
+              {saveStatus.success && (
+                <div className="mb-4 text-green-600">{saveStatus.message}</div>
+              )}
+              {saveStatus.error && (
+                <div className="mb-4 text-red-600">{saveStatus.message}</div>
+              )}
 
               {/* Buttons */}
               <button

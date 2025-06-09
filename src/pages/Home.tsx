@@ -4,6 +4,7 @@ import MainLayout from "../layouts/MainLayout";
 import NursingResearchBanner from "../components/researchBanner";
 import NewsCard from "../components/Blog";
 import TwitterCard from "../components/twitter";
+import PublicationCard from "../components/PublicationCard";
 
 interface BlogPost {
   _id: string;
@@ -93,7 +94,7 @@ const Home: React.FC = () => {
         {/* Section: Recent Publications */}
         <section className="py-10 px-4">
           <h2 className="text-3xl font-bold text-center">Our Recent Publications</h2>
-          <div className="mt-4 h-1 w-20 bg-blue-600 mx-auto mb-8"></div>
+          <div className="mt-4 h-1 w-20 bg-green-600 mx-auto mb-8"></div>
 
           {loadingPublications && <p className="text-center">Loading publications...</p>}
           {errorPublications && <p className="text-center text-red-500">{errorPublications}</p>}
@@ -101,12 +102,12 @@ const Home: React.FC = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 place-items-center">
             {publications.length > 0 ? (
               publications.map((item) => (
-                <NewsCard
+                <PublicationCard
                   key={item._id}
+                  id={item._id}
                   image={item.image ? BASE_URL + item.image : ""}
                   title={item.title}
                   shortDescription={(item.shortDescription || "").slice(0, 100) + "..."}
-                  longDescription={item.longDescription}
                 />
               ))
             ) : (
@@ -118,7 +119,7 @@ const Home: React.FC = () => {
         {/* Section: Latest News and Insights */}
         <section className="py-10 px-4">
           <h2 className="text-3xl font-bold text-center">Latest News and Insights</h2>
-          <div className="mt-4 h-1 w-20 bg-blue-600 mx-auto mb-8"></div>
+          <div className="mt-4 h-1 w-20 bg-green-600 mx-auto mb-8"></div>
 
           {loadingBlogs && <p className="text-center">Loading news...</p>}
           {errorBlogs && <p className="text-center text-red-500">{errorBlogs}</p>}
@@ -128,11 +129,11 @@ const Home: React.FC = () => {
               blogs.map((item) => (
                 <NewsCard
                   key={item._id}
+                  id={item._id}
                   image={item.image ? BASE_URL + item.image : ""}
                   video={item.video ? BASE_URL + item.video : undefined}
                   title={item.title}
                   shortDescription={(item.shortDescription || "").slice(0, 100) + "..."}
-                  longDescription={item.longDescription}
                   pdf={item.pdf ? BASE_URL + item.pdf : undefined}
                 />
               ))
@@ -144,7 +145,7 @@ const Home: React.FC = () => {
         {/* Section: Latest News and Insights */}
         <section className="py-10 px-4">
           <h2 className="text-3xl font-bold text-center">Upcoming Events</h2>
-          <div className="mt-4 h-1 w-20 bg-blue-600 mx-auto mb-8"></div>
+          <div className="mt-4 h-1 w-20 bg-green-600 mx-auto mb-8"></div>
 
           {loadingBlogs && <p className="text-center">Loading news...</p>}
           {errorBlogs && <p className="text-center text-red-500">{errorBlogs}</p>}
@@ -154,11 +155,11 @@ const Home: React.FC = () => {
               blogs.map((item) => (
                 <NewsCard
                   key={item._id}
+                  id={item._id}
                   image={item.image ? BASE_URL + item.image : ""}
                   video={item.video ? BASE_URL + item.video : undefined}
                   title={item.title}
                   shortDescription={(item.shortDescription || "").slice(0, 100) + "..."}
-                  longDescription={item.longDescription}
                   pdf={item.pdf ? BASE_URL + item.pdf : undefined}
                 />
               ))

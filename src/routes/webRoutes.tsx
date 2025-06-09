@@ -6,7 +6,6 @@ import Publications from "../pages/Publication";
 import Team from "../pages/Team";
 import Blog from "../pages/Blog";
 import Announcements from "../pages/Announcements";
-import Auth from "../pages/Auth";
 import Dashboard from "../pages/Dashboard";
 import SignUpForm from "../pages/signUp";
 import SignInForm from "../pages/signIn";
@@ -23,7 +22,6 @@ const WebRoutes = () => (
     <Route path="/donate" element={<DonationForm />} />
     <Route path="/blog" element={<Blog />} />
     <Route path="/announcements" element={<Announcements />} />
-    <Route path="/auth" element={<Auth />} />
     <Route path="/dashboard" element={<Dashboard />} />
     <Route path="/signUp" element={<SignUpForm />} />
     <Route path="/signIn" element={<SignInForm />} />

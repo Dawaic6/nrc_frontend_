@@ -13,6 +13,11 @@ const api = axios.create({
   },
 })
 
+const isStrongPassword = (password: string): boolean => {
+  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+  return regex.test(password);
+};
+
 const SignInForm: React.FC = () => {
   const [formData, setFormData] = useState({
     email: "",
@@ -94,6 +99,13 @@ const SignInForm: React.FC = () => {
             <h3 className="text-xl font-bold text-black mb-6">Sign In</h3>
 
             {error && <div className="mb-4 p-2 bg-red-100 text-red-700 text-sm rounded">{error}</div>}
+
+            {/* Password strength warning */}
+            {formData.password && !isStrongPassword(formData.password) && (
+              <div className="mb-2 p-2 bg-yellow-100 text-yellow-800 text-xs rounded">
+                Password is weak. Use at least 8 characters, one uppercase, one lowercase, one number, and one special character.
+              </div>
+            )}
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>

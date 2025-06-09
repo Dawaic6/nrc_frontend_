@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Services from "./pages/Services";
@@ -23,6 +23,13 @@ import Help from "./pages/dashboard/help";
 import TeamDashboard from "./pages/dashboard/team"; 
 import MessagesDashboard from "./pages/dashboard/mesage";
 import DashboardAnnouncements from "./pages/dashboard/UpcomingEvents"; // Import the new component
+
+// ProtectedRoute component
+const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
+  const token = localStorage.getItem("token");
+  return token ? children : <Navigate to="/signIn" replace />;
+};
+
 const App = () => {
   return (
     <Router>
@@ -41,8 +48,15 @@ const App = () => {
         <Route path="/signIn" element={<SignInForm />} />
         <Route path="/contact" element={<ContactForm />} />
 
-        {/* Dashboard routes - all nested under /dashboard */}
-        <Route path="/dashboard" element={<DashboardLayout />}>
+        {/* Protected dashboard routes */}
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <DashboardLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route index element={<Publications />} />
           
           {/* <Route index element={<DashboardHome />} /> This will render at /dashboard */}

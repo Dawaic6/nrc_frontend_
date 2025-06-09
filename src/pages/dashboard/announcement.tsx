@@ -27,6 +27,17 @@ const AnnouncementsDashboard: React.FC = () => {
     video?: File;
     pdf?: File;
   }>({});
+  const [saveStatus, setSaveStatus] = useState<{
+    loading: boolean;
+    success: boolean;
+    error: boolean;
+    message: string;
+  }>({
+    loading: false,
+    success: false,
+    error: false,
+    message: "",
+  });
 
   useEffect(() => {
     const fetchAnnouncements = async () => {
@@ -60,6 +71,7 @@ const AnnouncementsDashboard: React.FC = () => {
   };
 
   const handleSave = async () => {
+    setSaveStatus({ loading: true, success: false, error: false, message: "Saving... Please wait" });
     const formData = new FormData();
     const target = editingAnnouncement || newAnnouncement;
 
@@ -86,11 +98,13 @@ const AnnouncementsDashboard: React.FC = () => {
         const res = await axios.post("https://backend-nrc.onrender.com/api/announcements", formData);
         setAnnouncements((prev) => [...prev, res.data]);
       }
+      setSaveStatus({ loading: false, success: true, error: false, message: "Saved successfully!" });
       setShowModal(false);
       setEditingAnnouncement(null);
       setNewAnnouncement({});
       setSelectedFile({});
     } catch (err) {
+      setSaveStatus({ loading: false, success: false, error: true, message: "Save failed. Please try again." });
       console.error("Save failed:", err);
     }
   };
@@ -128,7 +142,8 @@ const AnnouncementsDashboard: React.FC = () => {
               <th className="border border-gray-300 px-4 py-2">Category</th>
               <th className="border border-gray-300 px-4 py-2">Short Description</th>
               <th className="border border-gray-300 px-4 py-2">Link</th>
-              <th className="border border-gray-300 px-4 py-2">Photo</th>
+              <th className="border border-gray-300 px-4 py-2">Media</th>
+              <th className="border border-gray-300 px-4 py-2">Video</th> {/* New column */}
               <th className="border border-gray-300 px-4 py-2">Action</th>
             </tr>
           </thead>
@@ -162,6 +177,26 @@ const AnnouncementsDashboard: React.FC = () => {
                       alt="Announcement"
                       className="w-12 h-12 object-cover"
                     />
+                  ) : announcement.video ? (
+                    <video
+                      src={BASE_URL + announcement.video}
+                      controls
+                      className="w-16 h-12 object-cover"
+                    />
+                  ) : (
+                    "N/A"
+                  )}
+                </td>
+                <td className="border border-gray-300 px-2 py-1">
+                  {announcement.video ? (
+                    <a
+                      href={BASE_URL + announcement.video}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-500 underline"
+                    >
+                      View Video
+                    </a>
                   ) : (
                     "N/A"
                   )}
@@ -258,25 +293,37 @@ const AnnouncementsDashboard: React.FC = () => {
             />
 
             {/* File Inputs */}
-            <label htmlFor="image"> Image</label>
+            <label htmlFor="image">Image</label>
             <input
               type="file"
               name="image"
               onChange={handleFileChange}
               className="w-full border border-gray-300 rounded px-4 py-2 mb-4"
             />
-            {/* <input
+            <label htmlFor="video">Video</label>
+            <input
               type="file"
               name="video"
               onChange={handleFileChange}
-              className="mb-2 block w-full"
+              className="w-full border border-gray-300 rounded px-4 py-2 mb-4"
             />
-            <input
+            {/* <input
               type="file"
               name="pdf"
               onChange={handleFileChange}
               className="mb-2 block w-full"
             /> */}
+
+            {/* Status Message */}
+            {saveStatus.loading && (
+              <div className="mb-4 text-blue-600">{saveStatus.message || "Saving..."}</div>
+            )}
+            {saveStatus.success && (
+              <div className="mb-4 text-green-600">{saveStatus.message}</div>
+            )}
+            {saveStatus.error && (
+              <div className="mb-4 text-red-600">{saveStatus.message}</div>
+            )}
 
             {/* Buttons */}
             <div className="flex justify-end gap-2">

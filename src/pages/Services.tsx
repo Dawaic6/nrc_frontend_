@@ -116,7 +116,7 @@ const ServiceItem = ({
         <h3 className="text-2xl font-semibold text-gray-900">{name}</h3>
         <button
           onClick={() => setShow(!show)}
-          className="text-blue-600 text-sm font-medium underline hover:text-blue-800 mt-2"
+          className="text-green-600 text-sm font-medium underline hover:text-green-800 mt-2"
         >
           {show ? 'Show less' : 'Learn more'}
         </button>
@@ -129,7 +129,7 @@ const ServiceItem = ({
       <img src={image} alt={name} className="mt-4 rounded-md w-full h-auto object-cover" />
       <button
         onClick={() => setShow(!show)}
-        className="text-blue-600 text-sm font-medium underline hover:text-blue-800 mt-2"
+        className="text-green-600 text-sm font-medium underline hover:text-green-800 mt-2"
       >
         {show ? 'Show less' : 'Learn more'}
       </button>
@@ -147,7 +147,7 @@ const Services = () => {
             {/* Section Title */}
             <div className="text-center mb-10">
               <h2 className="text-3xl font-bold text-gray-900 mb-2">{section.title}</h2>
-              <div className="h-1 w-24 bg-blue-600 mx-auto"></div>
+              <div className="h-1 w-24 bg-green-600 mx-auto"></div>
             </div>
 
             {/* Section Items */}

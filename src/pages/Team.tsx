@@ -119,7 +119,7 @@ const MeetTheTeam: React.FC = () => {
         <div className="container mx-auto px-4">
           <div className="mb-12">
             <h1 className="text-4xl font-bold text-center mb-8">Meet the Team</h1>
-            <div className="mt-4 h-1 w-20 bg-blue-600 mx-auto"></div>
+            <div className="mt-4 h-1 w-20 bg-green-600 mx-auto"></div>
             <div className="text-center text-gray-700 text-4xl bg-gray-200 p-8 rounded-lg shadow-md">
               <h2>
                 We are a passionate and dedicated spirit of professionals, committed to innovation, collaboration, and
@@ -131,7 +131,7 @@ const MeetTheTeam: React.FC = () => {
           {/* Current Team Section */}
           <section className="mb-16">
             <h2 className="text-3xl font-semibold mb-6 text-center">Current Team</h2>
-            <div className="mt-4 h-1 w-20 bg-blue-600 mx-auto"></div>
+            <div className="mt-4 h-1 w-20 bg-green-600 mx-auto"></div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {currentTeam.length > 0 ? (
                 currentTeam.map((member, index) => (
@@ -139,7 +139,7 @@ const MeetTheTeam: React.FC = () => {
                     key={index}
                     className="bg-white p-3 rounded-lg shadow-lg text-center hover:shadow-xl transition-shadow duration-300"
                   >
-                    <div className="w-60 h-60 mx-auto mb-4 rounded-full overflow-hidden border-4 border-blue-100">
+                    <div className="w-60 h-60 mx-auto mb-4 rounded-full overflow-hidden border-4 border-green-100">
                       {member.image ? (
                         <img
                           src={member.image || "/placeholder.svg"}
@@ -171,19 +171,19 @@ const MeetTheTeam: React.FC = () => {
           {/* Alumnae Team Section */}
           <section>
             <h2 className="text-3xl font-semibold mb-6 text-center">Our Alumnae Team Members</h2>
-            <div className="mt-4 h-1 w-20 bg-blue-600 mx-auto"></div>
+            <div className="mt-4 h-1 w-20 bg-green-600 mx-auto"></div>
             {Object.keys(alumnaeTeams).length > 0 ? (
               Object.entries(alumnaeTeams).map(([year, members], index) => (
                 <div key={index} className="mb-12">
                   <h3 className="text-2xl font-semibold mb-6 text-center">{year}</h3>
-                  <div className="mt-4 h-1 w-20 bg-blue-600 mx-auto mb-8"></div>
+                  <div className="mt-4 h-1 w-20 bg-green-600 mx-auto mb-8"></div>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {members.map((member, idx) => (
                       <div
                         key={idx}
                         className="bg-white p-3 rounded-lg shadow-lg text-center hover:shadow-xl transition-shadow duration-300"
                       >
-                        <div className="w-60 h-60 mx-auto mb-4 rounded-full overflow-hidden border-4 border-blue-100">
+                        <div className="w-60 h-60 mx-auto mb-4 rounded-full overflow-hidden border-4 border-green-100">
                           {member.image ? (
                             <img
                               src={member.image || "/placeholder.svg"}

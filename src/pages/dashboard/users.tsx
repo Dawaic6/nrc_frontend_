@@ -23,6 +23,12 @@ const UserDashboard: React.FC = () => {
   const [newUser, setNewUser] = useState<Partial<IUser>>({});
   const [searchEmail, setSearchEmail] = useState("");
   const [filterRole, setFilterRole] = useState("");
+  const [saveStatus, setSaveStatus] = useState({
+    loading: false,
+    success: false,
+    error: false,
+    message: "",
+  });
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -60,7 +66,7 @@ const UserDashboard: React.FC = () => {
       setError("Failed to delete user.");
     }
   };
- const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
   const handleEdit = (user: IUser) => {
     setEditingUser(user);
@@ -68,6 +74,7 @@ const UserDashboard: React.FC = () => {
   };
 
   const handleSave = async () => {
+    setSaveStatus({ loading: true, success: false, error: false, message: "Saving... Please wait" });
     if (editingUser) {
       try {
         await axios.put(`https://backend-nrc.onrender.com/api/users/${editingUser._id}`, editingUser);
@@ -78,9 +85,11 @@ const UserDashboard: React.FC = () => {
         setMessage("User updated successfully.");
         setShowModal(false);
         setEditingUser(null);
+        setSaveStatus({ loading: false, success: true, error: false, message: "User updated successfully." });
       } catch (err) {
         console.error("Failed to update user:", err);
         setError("Failed to update user.");
+        setSaveStatus({ loading: false, success: false, error: true, message: "Failed to update user." });
       }
     } else {
       try {
@@ -89,6 +98,7 @@ const UserDashboard: React.FC = () => {
         setMessage("User registered successfully.");
         setShowModal(false);
         setNewUser({});
+        setSaveStatus({ loading: false, success: true, error: false, message: "User registered successfully." });
       } catch (err: any) {
         console.error("Failed to create user:", err);
         if (err.response?.data?.message) {
@@ -96,6 +106,7 @@ const UserDashboard: React.FC = () => {
         } else {
           setError("Failed to register user.");
         }
+        setSaveStatus({ loading: false, success: false, error: true, message: "Failed to register user." });
       }
     }
 
@@ -187,143 +198,154 @@ const UserDashboard: React.FC = () => {
         </table>
       </div>
 
-     {showModal && (
-  <div className="fixed inset-0 bg-[#414868] bg-opacity-50 flex items-center justify-center">
-    <div className="bg-white p-6 rounded shadow-lg w-96">
-      <h3 className="text-xl font-bold mb-4">
-        {editingUser ? "Edit User" : "Add New User"}
-      </h3>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          const errors: Record<string, string> = {};
+      {showModal && (
+        <div className="fixed inset-0 bg-[#414868] bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white p-6 rounded shadow-lg w-96">
+            <h3 className="text-xl font-bold mb-4">
+              {editingUser ? "Edit User" : "Add New User"}
+            </h3>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                const errors: Record<string, string> = {};
 
-          const user = editingUser || newUser;
+                const user = editingUser || newUser;
 
-          if (!user.firstName?.trim()) errors.firstName = "First name is required.";
-          if (!user.lastName?.trim()) errors.lastName = "Last name is required.";
-          if (!user.email?.trim()) {
-            errors.email = "Email is required.";
-          } else if (!/\S+@\S+\.\S+/.test(user.email)) {
-            errors.email = "Invalid email address.";
-          }
-          if (!editingUser && !newUser.password?.trim()) {
-            errors.password = "Password is required.";
-          }
-          if (!user.role) errors.role = "Role is required.";
-          if (!user.status?.trim()) errors.status = "Status is required.";
+                if (!user.firstName?.trim()) errors.firstName = "First name is required.";
+                if (!user.lastName?.trim()) errors.lastName = "Last name is required.";
+                if (!user.email?.trim()) {
+                  errors.email = "Email is required.";
+                } else if (!/\S+@\S+\.\S+/.test(user.email)) {
+                  errors.email = "Invalid email address.";
+                }
+                if (!editingUser && !newUser.password?.trim()) {
+                  errors.password = "Password is required.";
+                }
+                if (!user.role) errors.role = "Role is required.";
+                if (!user.status?.trim()) errors.status = "Status is required.";
 
-          setFormErrors(errors);
+                setFormErrors(errors);
 
-          if (Object.keys(errors).length === 0) {
-            handleSave();
-          }
-        }}
-      >
-        {/* First Name */}
-        <label className="block text-sm font-medium mb-1">First Name</label>
-        <input
-          type="text"
-          value={editingUser?.firstName || newUser.firstName || ""}
-          onChange={(e) =>
-            editingUser
-              ? setEditingUser({ ...editingUser, firstName: e.target.value })
-              : setNewUser({ ...newUser, firstName: e.target.value })
-          }
-          className="w-full border rounded px-4 py-2 mb-1"
-        />
-        {formErrors.firstName && <p className="text-red-500 text-sm mb-2">{formErrors.firstName}</p>}
+                if (Object.keys(errors).length === 0) {
+                  handleSave();
+                }
+              }}
+            >
+              {/* First Name */}
+              <label className="block text-sm font-medium mb-1">First Name</label>
+              <input
+                type="text"
+                value={editingUser?.firstName || newUser.firstName || ""}
+                onChange={(e) =>
+                  editingUser
+                    ? setEditingUser({ ...editingUser, firstName: e.target.value })
+                    : setNewUser({ ...newUser, firstName: e.target.value })
+                }
+                className="w-full border rounded px-4 py-2 mb-1"
+              />
+              {formErrors.firstName && <p className="text-red-500 text-sm mb-2">{formErrors.firstName}</p>}
 
-        {/* Last Name */}
-        <label className="block text-sm font-medium mb-1">Last Name</label>
-        <input
-          type="text"
-          value={editingUser?.lastName || newUser.lastName || ""}
-          onChange={(e) =>
-            editingUser
-              ? setEditingUser({ ...editingUser, lastName: e.target.value })
-              : setNewUser({ ...newUser, lastName: e.target.value })
-          }
-          className="w-full border rounded px-4 py-2 mb-1"
-        />
-        {formErrors.lastName && <p className="text-red-500 text-sm mb-2">{formErrors.lastName}</p>}
+              {/* Last Name */}
+              <label className="block text-sm font-medium mb-1">Last Name</label>
+              <input
+                type="text"
+                value={editingUser?.lastName || newUser.lastName || ""}
+                onChange={(e) =>
+                  editingUser
+                    ? setEditingUser({ ...editingUser, lastName: e.target.value })
+                    : setNewUser({ ...newUser, lastName: e.target.value })
+                }
+                className="w-full border rounded px-4 py-2 mb-1"
+              />
+              {formErrors.lastName && <p className="text-red-500 text-sm mb-2">{formErrors.lastName}</p>}
 
-        {/* Email */}
-        <label className="block text-sm font-medium mb-1">Email</label>
-        <input
-          type="email"
-          value={editingUser?.email || newUser.email || ""}
-          onChange={(e) =>
-            editingUser
-              ? setEditingUser({ ...editingUser, email: e.target.value })
-              : setNewUser({ ...newUser, email: e.target.value })
-          }
-          className="w-full border rounded px-4 py-2 mb-1"
-        />
-        {formErrors.email && <p className="text-red-500 text-sm mb-2">{formErrors.email}</p>}
+              {/* Email */}
+              <label className="block text-sm font-medium mb-1">Email</label>
+              <input
+                type="email"
+                value={editingUser?.email || newUser.email || ""}
+                onChange={(e) =>
+                  editingUser
+                    ? setEditingUser({ ...editingUser, email: e.target.value })
+                    : setNewUser({ ...newUser, email: e.target.value })
+                }
+                className="w-full border rounded px-4 py-2 mb-1"
+              />
+              {formErrors.email && <p className="text-red-500 text-sm mb-2">{formErrors.email}</p>}
 
-        {/* Password (only for new users) */}
-        {!editingUser && (
-          <>
-            <label className="block text-sm font-medium mb-1">Password</label>
-            <input
-              type="password"
-              value={newUser.password || ""}
-              onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
-              className="w-full border rounded px-4 py-2 mb-1"
-            />
-            {formErrors.password && <p className="text-red-500 text-sm mb-2">{formErrors.password}</p>}
-          </>
-        )}
+              {/* Password (only for new users) */}
+              {!editingUser && (
+                <>
+                  <label className="block text-sm font-medium mb-1">Password</label>
+                  <input
+                    type="password"
+                    value={newUser.password || ""}
+                    onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
+                    className="w-full border rounded px-4 py-2 mb-1"
+                  />
+                  {formErrors.password && <p className="text-red-500 text-sm mb-2">{formErrors.password}</p>}
+                </>
+              )}
 
-        {/* Role */}
-        <label className="block text-sm font-medium mb-1">Role</label>
-        <select
-          value={editingUser?.role || newUser.role || ""}
-          onChange={(e) =>
-            editingUser
-              ? setEditingUser({ ...editingUser, role: e.target.value })
-              : setNewUser({ ...newUser, role: e.target.value })
-          }
-          className="w-full border rounded px-4 py-2 mb-1"
-        >
-          <option value="">Select Role</option>
-          <option value="admin">Admin</option>
-          <option value="user">User</option>
-        </select>
-        {formErrors.role && <p className="text-red-500 text-sm mb-2">{formErrors.role}</p>}
+              {/* Role */}
+              <label className="block text-sm font-medium mb-1">Role</label>
+              <select
+                value={editingUser?.role || newUser.role || ""}
+                onChange={(e) =>
+                  editingUser
+                    ? setEditingUser({ ...editingUser, role: e.target.value })
+                    : setNewUser({ ...newUser, role: e.target.value })
+                }
+                className="w-full border rounded px-4 py-2 mb-1"
+              >
+                <option value="">Select Role</option>
+                <option value="admin">Admin</option>
+                <option value="user">User</option>
+              </select>
+              {formErrors.role && <p className="text-red-500 text-sm mb-2">{formErrors.role}</p>}
 
-        {/* Status */}
-        <label className="block text-sm font-medium mb-1">Status</label>
-        <input
-          type="text"
-          value={editingUser?.status || newUser.status || ""}
-          onChange={(e) =>
-            editingUser
-              ? setEditingUser({ ...editingUser, status: e.target.value })
-              : setNewUser({ ...newUser, status: e.target.value })
-          }
-          className="w-full border rounded px-4 py-2 mb-1"
-        />
-        {formErrors.status && <p className="text-red-500 text-sm mb-4">{formErrors.status}</p>}
+              {/* Status */}
+              <label className="block text-sm font-medium mb-1">Status</label>
+              <input
+                type="text"
+                value={editingUser?.status || newUser.status || ""}
+                onChange={(e) =>
+                  editingUser
+                    ? setEditingUser({ ...editingUser, status: e.target.value })
+                    : setNewUser({ ...newUser, status: e.target.value })
+                }
+                className="w-full border rounded px-4 py-2 mb-1"
+              />
+              {formErrors.status && <p className="text-red-500 text-sm mb-4">{formErrors.status}</p>}
 
-        {/* Buttons */}
-        <div className="flex justify-end">
-          <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">
-            Save
-          </button>
-          <button
-            type="button"
-            onClick={() => setShowModal(false)}
-            className="bg-gray-400 text-white px-4 py-2 rounded ml-2"
-          >
-            Cancel
-          </button>
+              {/* Status Message */}
+              {saveStatus.loading && (
+                <div className="mb-4 text-blue-600">{saveStatus.message || "Saving..."}</div>
+              )}
+              {saveStatus.success && (
+                <div className="mb-4 text-green-600">{saveStatus.message}</div>
+              )}
+              {saveStatus.error && (
+                <div className="mb-4 text-red-600">{saveStatus.message}</div>
+              )}
+
+              {/* Buttons */}
+              <div className="flex justify-end">
+                <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">
+                  Save
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowModal(false)}
+                  className="bg-gray-400 text-white px-4 py-2 rounded ml-2"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-      </form>
-    </div>
-  </div>
-)}
+      )}
     </div>
   );
 };

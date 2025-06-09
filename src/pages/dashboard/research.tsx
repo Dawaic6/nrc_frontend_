@@ -26,6 +26,17 @@ const Research: React.FC = () => {
     video?: File;
     pdf?: File;
   }>({});
+  const [saveStatus, setSaveStatus] = useState<{
+    loading: boolean;
+    success: boolean;
+    error: boolean;
+    message: string;
+  }>({
+    loading: false,
+    success: false,
+    error: false,
+    message: "",
+  });
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -57,6 +68,7 @@ const Research: React.FC = () => {
   };
 
   const handleSave = async () => {
+    setSaveStatus({ loading: true, success: false, error: false, message: "Saving... Please wait" });
     const formData = new FormData();
     if (editingBlog) {
       formData.append("title", editingBlog.title);
@@ -78,8 +90,10 @@ const Research: React.FC = () => {
         setShowModal(false);
         setEditingBlog(null);
         setSelectedFile({});
+        setSaveStatus({ loading: false, success: true, error: false, message: "Blog updated successfully!" });
       } catch (err) {
         console.error("Failed to update blog:", err);
+        setSaveStatus({ loading: false, success: false, error: true, message: "Failed to update blog." });
       }
     } else {
       formData.append("title", newBlog.title || "");
@@ -95,8 +109,10 @@ const Research: React.FC = () => {
         setShowModal(false);
         setNewBlog({});
         setSelectedFile({});
+        setSaveStatus({ loading: false, success: true, error: false, message: "Blog created successfully!" });
       } catch (err) {
         console.error("Failed to create blog:", err);
+        setSaveStatus({ loading: false, success: false, error: true, message: "Failed to create blog." });
       }
     }
   };
@@ -289,6 +305,17 @@ const Research: React.FC = () => {
           onChange={handleFileChange}
           className="w-full border border-gray-300 rounded px-4 py-2 mb-4"
         />
+
+        {/* Status Message */}
+        {saveStatus.loading && (
+          <div className="mb-4 text-blue-600">{saveStatus.message || "Saving..."}</div>
+        )}
+        {saveStatus.success && (
+          <div className="mb-4 text-green-600">{saveStatus.message}</div>
+        )}
+        {saveStatus.error && (
+          <div className="mb-4 text-red-600">{saveStatus.message}</div>
+        )}
 
         {/* Buttons */}
         <button
