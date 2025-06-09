@@ -23,6 +23,8 @@ import Help from "./pages/dashboard/help";
 import TeamDashboard from "./pages/dashboard/team"; 
 import MessagesDashboard from "./pages/dashboard/mesage";
 import DashboardAnnouncements from "./pages/dashboard/UpcomingEvents"; // Import the new component
+import BlogDetail from "./pages/BlogDetail";
+import PublicationDetail from "./pages/PublicationDetail";
 
 // ProtectedRoute component
 const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
@@ -47,6 +49,8 @@ const App = () => {
         <Route path="/signUp" element={<SignUpForm />} />
         <Route path="/signIn" element={<SignInForm />} />
         <Route path="/contact" element={<ContactForm />} />
+        <Route path="/blog/:id" element={<BlogDetail />} />
+        <Route path="/publications/:id" element={<PublicationDetail />} />
 
         {/* Protected dashboard routes */}
         <Route

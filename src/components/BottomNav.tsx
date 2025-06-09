@@ -104,7 +104,7 @@ const BottomNav = () => {
             <div className="absolute top-full left-0 mt-2 bg-white text-gray-800 rounded-lg shadow-lg py-2">
               <HashLink to="/publication#ongoingResearch" className="block px-4 py-2 hover:bg-gray-100" onClick={() => setOpenMenu(null)}>Ongoing Research</HashLink>
               <HashLink to="/publication#publishedResearch" className="block px-4 py-2 hover:bg-gray-100" onClick={() => setOpenMenu(null)}>Published Research</HashLink>
-              <HashLink to="/publication#Report" className="block px-4 py-2 hover:bg-gray-100" onClick={() => setOpenMenu(null)}>Published Research</HashLink>
+              <HashLink to="/publication#publishedReports" className="block px-4 py-2 hover:bg-gray-100" onClick={() => setOpenMenu(null)}>Published Reports</HashLink>
             </div>
           )}
         </div>
