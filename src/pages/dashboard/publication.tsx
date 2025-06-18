@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
-const BASE_URL = "https://backend-nrc.onrender.com/uploads/";
 
 interface Publication {
   _id: string;
@@ -189,7 +188,7 @@ const Publications: React.FC = () => {
               <td className="border border-gray-300 px-4 py-2">
                 {publication.image ? (
                   <img
-                    src={`${BASE_URL}${publication.image}`}
+                    src={`${publication.image}`}
                     alt="Publication"
                     className="w-16 h-16 object-cover"
                   />
@@ -199,7 +198,7 @@ const Publications: React.FC = () => {
               </td>
               <td className="border border-gray-300 px-4 py-2">
                 {publication.video ? (
-                  <a href={`${BASE_URL}${publication.video}`} target="_blank" rel="noopener noreferrer">
+                  <a href={`${publication.video}`} target="_blank" rel="noopener noreferrer">
                     View Video
                   </a>
                 ) : (
@@ -208,7 +207,7 @@ const Publications: React.FC = () => {
               </td>
               <td className="border border-gray-300 px-4 py-2">
                 {publication.pdf ? (
-                  <a href={`${BASE_URL}${publication.pdf}`} target="_blank" rel="noopener noreferrer">
+                  <a href={`${publication.pdf}`} target="_blank" rel="noopener noreferrer">
                     View PDF
                   </a>
                 ) : (

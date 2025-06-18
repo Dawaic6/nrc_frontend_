@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
 
-const BASE_URL = "https://backend-nrc.onrender.com/uploads/";
-
 interface BlogPost {
   _id: string;
   title: string;
@@ -50,18 +48,18 @@ const BlogDetail: React.FC = () => {
           &lt; Back
         </button>
         <img
-          src={blog.image ? BASE_URL + blog.image : ""}
+          src={blog.image || ""}
           alt={blog.title}
           className="w-full h-64 object-cover rounded mb-6"
         />
         <h1 className="text-3xl font-bold mb-4">{blog.title}</h1>
         <p className="text-gray-700 mb-6">{blog.longDescription}</p>
         {blog.video && (
-          <video src={BASE_URL + blog.video} controls className="w-full rounded mb-4"></video>
+          <video src={blog.video} controls className="w-full rounded mb-4"></video>
         )}
         {blog.pdf && (
           <a
-            href={BASE_URL + blog.pdf}
+            href={blog.pdf}
             download
             className="text-green-600 underline"
           >

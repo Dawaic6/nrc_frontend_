@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
-const BASE_URL = "https://backend-nrc.onrender.com/uploads/";
 
 interface BlogPost {
   _id: string;
@@ -161,7 +160,7 @@ const Research: React.FC = () => {
               <td className="border border-gray-300 px-4 py-2">{blog._id}</td>
               <td className="border border-gray-300 px-4 py-2">{blog.title}</td>
               <td className="border border-gray-300 px-4 py-2">
-                {blog.pdf ? <a href={BASE_URL + blog.pdf}>View PDF</a> : "N/A"}
+                {blog.pdf ? <a href={ blog.pdf}>View PDF</a> : "N/A"}
               </td>
               <td className="border border-gray-300 px-4 py-2">
                 {blog.longDescription}
@@ -172,7 +171,7 @@ const Research: React.FC = () => {
               <td className="border border-gray-300 px-4 py-2">
                 {blog.image ? (
                   <img
-                    src={BASE_URL + blog.image}
+                    src={ blog.image}
                     alt="Blog"
                     className="w-16 h-16 object-cover"
                   />
@@ -181,7 +180,7 @@ const Research: React.FC = () => {
                 )}
               </td>
               <td className="border border-gray-300 px-4 py-2">
-                {blog.video ? <a href={BASE_URL + blog.video}>View Video</a> : "N/A"}
+                {blog.video ? <a href={blog.video}>View Video</a> : "N/A"}
               </td>
               <td className="border border-gray-300 px-4 py-2">
                 <button

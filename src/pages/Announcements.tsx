@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import MainLayout from "../layouts/MainLayout";
 
-const BASE_URL = "https://backend-nrc.onrender.com/uploads/";
-
 interface Announcement {
   _id: string;
   title: string;
@@ -27,7 +25,6 @@ const AnnouncementsPage: React.FC = () => {
         const res = await axios.get("https://backend-nrc.onrender.com/api/announcements");
         const data = res.data.data;
 
-        // Filter announcements and opportunities based on category
         const announcementsData = data.filter(
           (item: Announcement) => item.category === "announcement"
         );
@@ -67,18 +64,34 @@ const AnnouncementsPage: React.FC = () => {
             <div key={a._id} className="border p-4 rounded shadow-sm space-y-2">
               <h3 className="text-xl font-semibold">{a.title}</h3>
               <p>{a.shortDescription}</p>
-              {a.video ? (
-                <video controls className="mt-2 rounded h-auto w-full">
-                  <source src={`${BASE_URL}${a.video}`} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-              ) : a.image ? (
+              
+             {a.image && (
                 <img
-                  src={`${BASE_URL}${a.image}`}
+                  src={a.image}
                   alt="announcement"
                   className="mt-2 rounded h-auto w-full"
                 />
-              ) : null}
+              )}
+
+              {a.video && (
+                <video controls className="mt-2 rounded h-auto w-full">
+                  <source src={a.video} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              )}
+
+
+              {a.pdf && (
+                <a
+                  href={a.pdf}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500 underline block"
+                >
+                  View PDF
+                </a>
+              )}
+
               {a.link && (
                 <a
                   href={a.link}
@@ -92,8 +105,10 @@ const AnnouncementsPage: React.FC = () => {
             </div>
           ))}
         </div>
+
         {/* Divider */}
         <hr className="my-10 border-t-2" />
+
         {/* Opportunities Section */}
         <h2 className="text-2xl font-bold">🎯 Opportunities</h2>
         <div className="space-y-6">
@@ -102,18 +117,31 @@ const AnnouncementsPage: React.FC = () => {
             <div key={o._id} className="border p-4 rounded shadow-sm space-y-2">
               <h3 className="text-xl font-semibold">{o.title}</h3>
               <p>{o.shortDescription}</p>
+
               {o.video ? (
                 <video controls className="mt-2 rounded h-auto w-full">
-                  <source src={`${BASE_URL}${o.video}`} type="video/mp4" />
+                  <source src={o.video} type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
               ) : o.image ? (
                 <img
-                  src={`${BASE_URL}${o.image}`}
+                  src={o.image}
                   alt="opportunity"
                   className="mt-2 rounded h-auto w-full"
                 />
               ) : null}
+
+              {o.pdf && (
+                <a
+                  href={o.pdf}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500 underline block"
+                >
+                  View PDF
+                </a>
+              )}
+
               {o.link && (
                 <a
                   href={o.link}

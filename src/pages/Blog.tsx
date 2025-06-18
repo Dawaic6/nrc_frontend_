@@ -14,8 +14,6 @@ interface BlogPost {
   pdf?: string;
 }
 
-const BASE_URL = "https://backend-nrc.onrender.com/uploads/";
-
 const Blog: React.FC = () => {
   const [blogs, setBlogs] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
@@ -83,11 +81,11 @@ const Blog: React.FC = () => {
               <NewsCard
                 key={item._id}
                 id={item._id}
-                image={item.image ? BASE_URL + item.image : ""}
-                video={item.video ? BASE_URL + item.video : undefined}
+                image={item.image || ""}
+                video={item.video || undefined}
                 title={item.title}
-                shortDescription={(item.shortDescription || "").slice(0, 100) + "..."} // Shorten the description for preview
-                pdf={item.pdf ? BASE_URL + item.pdf : undefined}
+                shortDescription={(item.shortDescription || "").slice(0, 100) + "..."}
+                pdf={item.pdf || undefined}
               />
             ))
           ) : (
@@ -100,6 +98,3 @@ const Blog: React.FC = () => {
 };
 
 export default Blog;
-
-
-

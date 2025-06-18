@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
-const BASE_URL = "https://backend-nrc.onrender.com/";
 
 interface TeamMember {
   _id: string;
@@ -181,7 +180,7 @@ const TeamDashboard: React.FC = () => {
                 <td className="border border-gray-300 px-4 py-2">
                   {member.image ? (
                     <img
-                      src={BASE_URL + member.image}
+                      src={member.image}
                       alt="Team Member"
                       className="w-16 h-16 object-cover"
                     />

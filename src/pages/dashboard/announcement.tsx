@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
-const BASE_URL = "https://backend-nrc.onrender.com/uploads/";
 
 interface Announcement {
   _id: string;
@@ -173,13 +172,13 @@ const AnnouncementsDashboard: React.FC = () => {
                 <td className="border border-gray-300 px-2 py-1">
                   {announcement.image ? (
                     <img
-                      src={BASE_URL + announcement.image}
+                      src={announcement.image}
                       alt="Announcement"
                       className="w-12 h-12 object-cover"
                     />
                   ) : announcement.video ? (
                     <video
-                      src={BASE_URL + announcement.video}
+                      src={ announcement.video}
                       controls
                       className="w-16 h-12 object-cover"
                     />
@@ -190,7 +189,7 @@ const AnnouncementsDashboard: React.FC = () => {
                 <td className="border border-gray-300 px-2 py-1">
                   {announcement.video ? (
                     <a
-                      href={BASE_URL + announcement.video}
+                      href={ announcement.video}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-blue-500 underline"

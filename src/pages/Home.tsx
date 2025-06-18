@@ -11,21 +11,19 @@ interface BlogPost {
   title: string;
   shortDescription: string;
   longDescription: string;
-  image?: string;
-  video?: string;
-  pdf?: string;
+  image?: string;  // Full Cloudinary URL expected
+  video?: string;  // Full Cloudinary URL expected
+  pdf?: string;    // Full Cloudinary URL expected
   createdAt?: string;
 }
 
-const BASE_URL = "https://backend-nrc.onrender.com/uploads/";
-
 const Home: React.FC = () => {
   const [blogs, setBlogs] = useState<BlogPost[]>([]);
-  const [publications, setPublications] = useState<BlogPost[]>([]); // State for publications
+  const [publications, setPublications] = useState<BlogPost[]>([]);
   const [loadingBlogs, setLoadingBlogs] = useState(true);
-  const [loadingPublications, setLoadingPublications] = useState(true); // Loading state for publications
+  const [loadingPublications, setLoadingPublications] = useState(true);
   const [errorBlogs, setErrorBlogs] = useState<string | null>(null);
-  const [errorPublications, setErrorPublications] = useState<string | null>(null); // Error state for publications
+  const [errorPublications, setErrorPublications] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -38,15 +36,13 @@ const Home: React.FC = () => {
           longDescription: item.longDescription?.replace(/^"|"$/g, "") || "No content available",
         }));
 
-        const sortedBlogs = cleaned.sort((a: BlogPost, b: BlogPost) => {
-          const dateA: number = new Date(a.createdAt || "").getTime();
-          const dateB: number = new Date(b.createdAt || "").getTime();
+        const sortedBlogs = cleaned.sort((a: { createdAt: any; }, b: { createdAt: any; }) => {
+          const dateA = new Date(a.createdAt || "").getTime();
+          const dateB = new Date(b.createdAt || "").getTime();
           return dateB - dateA;
         });
 
-        const latestSix = sortedBlogs.slice(0, 6);
-
-        setBlogs(latestSix);
+        setBlogs(sortedBlogs.slice(0, 6));
       } catch (err) {
         setErrorBlogs("Failed to fetch blog posts.");
         console.error(err);
@@ -57,7 +53,7 @@ const Home: React.FC = () => {
 
     const fetchPublications = async () => {
       try {
-        const res = await axios.get("https://backend-nrc.onrender.com/api/publications"); // Fetch from publications endpoint
+        const res = await axios.get("https://backend-nrc.onrender.com/api/publications");
         const cleaned = res.data.data.map((item: BlogPost) => ({
           ...item,
           title: item.title?.replace(/^"|"$/g, "") || "Untitled",
@@ -65,15 +61,13 @@ const Home: React.FC = () => {
           longDescription: item.longDescription?.replace(/^"|"$/g, "") || "No content available",
         }));
 
-        const sortedPublications = cleaned.sort((a: BlogPost, b: BlogPost) => {
-          const dateA: number = new Date(a.createdAt || "").getTime();
-          const dateB: number = new Date(b.createdAt || "").getTime();
+        const sortedPublications = cleaned.sort((a: { createdAt: any; }, b: { createdAt: any; }) => {
+          const dateA = new Date(a.createdAt || "").getTime();
+          const dateB = new Date(b.createdAt || "").getTime();
           return dateB - dateA;
         });
 
-        const latestSix = sortedPublications.slice(0, 6);
-
-        setPublications(latestSix);
+        setPublications(sortedPublications.slice(0, 6));
       } catch (err) {
         setErrorPublications("Failed to fetch publications.");
         console.error(err);
@@ -88,7 +82,7 @@ const Home: React.FC = () => {
 
   return (
     <MainLayout>
-      <div className="container mx-auto  py-1">
+      <div className="container mx-auto py-1">
         <NursingResearchBanner />
 
         {/* Section: Recent Publications */}
@@ -105,7 +99,7 @@ const Home: React.FC = () => {
                 <PublicationCard
                   key={item._id}
                   id={item._id}
-                  image={item.image ? BASE_URL + item.image : ""}
+                  image={item.image || ""} 
                   title={item.title}
                   shortDescription={(item.shortDescription || "").slice(0, 100) + "..."}
                 />
@@ -130,11 +124,11 @@ const Home: React.FC = () => {
                 <NewsCard
                   key={item._id}
                   id={item._id}
-                  image={item.image ? BASE_URL + item.image : ""}
-                  video={item.video ? BASE_URL + item.video : undefined}
+                  image={item.image || ""}
+                  video={item.video || undefined}
                   title={item.title}
                   shortDescription={(item.shortDescription || "").slice(0, 100) + "..."}
-                  pdf={item.pdf ? BASE_URL + item.pdf : undefined}
+                  pdf={item.pdf || undefined}
                 />
               ))
             ) : (
@@ -142,7 +136,8 @@ const Home: React.FC = () => {
             )}
           </div>
         </section>
-        {/* Section: Latest News and Insights */}
+
+        {/* Section: Upcoming Events */}
         <section className="py-10 px-4">
           <h2 className="text-3xl font-bold text-center">Upcoming Events</h2>
           <div className="mt-4 h-1 w-20 bg-green-600 mx-auto mb-8"></div>
@@ -156,11 +151,11 @@ const Home: React.FC = () => {
                 <NewsCard
                   key={item._id}
                   id={item._id}
-                  image={item.image ? BASE_URL + item.image : ""}
-                  video={item.video ? BASE_URL + item.video : undefined}
+                  image={item.image || ""}
+                  video={item.video || undefined}
                   title={item.title}
                   shortDescription={(item.shortDescription || "").slice(0, 100) + "..."}
-                  pdf={item.pdf ? BASE_URL + item.pdf : undefined}
+                  pdf={item.pdf || undefined}
                 />
               ))
             ) : (
@@ -168,7 +163,6 @@ const Home: React.FC = () => {
             )}
           </div>
         </section>
-
 
         {/* Section: Twitter */}
         <div className="min-h-screen bg-white flex items-center justify-center">
